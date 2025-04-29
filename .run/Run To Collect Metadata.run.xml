@@ -1,0 +1,27 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run To Collect Metadata" type="KtorApplicationConfigurationType" factoryName="Ktor">
+    <option name="ALTERNATIVE_JRE_PATH" value="graalvm-ce-21" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="io.github.stream29.proxy.MainKt" />
+    <module name="OpenAI2LmStudioProxy.main" />
+    <option name="VM_PARAMETERS" value="-agentlib:native-image-agent=config-output-dir=src\main\resources\META-INF\native-image" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="io.github.stream29.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="alternativeJrePath" value="graalvm-ce-21" />
+    <option name="alternativeJrePathEnabled" value="true" />
+    <option name="includeProvidedScope" value="false" />
+    <option name="mainClass" value="io.github.stream29.proxy.MainKt" />
+    <option name="passParentEnvs" value="true" />
+    <option name="programParameters" value="" />
+    <option name="shortenCommandLine" />
+    <option name="vmParameters" value="-agentlib:native-image-agent=config-output-dir=src\main\resources\META-INF\native-image" />
+    <option name="workingDirectory" value="E:\ACodeSpace\local\OpenAI2LmStudioProxy\OpenAI2LmStudioProxy" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
