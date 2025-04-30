@@ -9,12 +9,12 @@ data class LModel(
     val id: String,
     val `object`: String = "model",
     val type: String = "llm",
-    val publisher: String = "alibaba",
-    val arch: String = "qwen",
+    val publisher: String = "unknown",
+    val arch: String = "unknown",
     @SerialName("compatibility_type")
-    val compatibilityType: String = "gguf",
-    val quantization: String = "Q4_0",
-    val state: String = "not-loaded",
+    val compatibilityType: String = "unknown",
+    val quantization: String = "unknown",
+    val state: String = "loaded",
     @SerialName("max_context_length")
     val maxContextLength: Int = 1_000_000,
 )

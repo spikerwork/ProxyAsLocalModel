@@ -14,10 +14,10 @@ repositories {
 
 dependencies {
     // Ktor server
-    implementation("io.ktor:ktor-server-core:3.0.0")
-    implementation("io.ktor:ktor-server-cio:3.0.0")
-    implementation("io.ktor:ktor-server-call-logging:3.0.0")
-    implementation("io.ktor:ktor-server-content-negotiation:3.0.0")
+    implementation("io.ktor:ktor-server-core:3.1.2")
+    implementation("io.ktor:ktor-server-cio:3.1.2")
+    implementation("io.ktor:ktor-server-call-logging:3.1.2")
+    implementation("io.ktor:ktor-server-content-negotiation:3.1.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.10.2")
 
@@ -25,7 +25,7 @@ dependencies {
         exclude("org.slf4j", "slf4j-simple")
     }
 
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
 
     implementation("ch.qos.logback:logback-classic:1.4.11")
@@ -35,7 +35,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.77.1")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.ktor:ktor-server-test-host:3.0.0")
+    testImplementation("io.ktor:ktor-server-test-host:3.1.2")
 }
 
 kotlin {

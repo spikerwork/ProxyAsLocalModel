@@ -7,21 +7,29 @@ import io.github.stream29.streamlin.AutoUpdateMode
 import io.github.stream29.streamlin.AutoUpdatePropertyRoot
 import io.github.stream29.streamlin.getValue
 import io.github.stream29.streamlin.setValue
+import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
+import org.slf4j.helpers.NOPLogger
 import java.io.File
 
-val logger = LoggerFactory.getLogger("Global")!!
+val configLogger = LoggerFactory.getLogger("Config")!!
+val apiLogger = LoggerFactory.getLogger("API")!!
+val lmStudioLogger = LoggerFactory.getLogger("LM Studio Server")!!
+val ollamaLogger = LoggerFactory.getLogger("Ollama Server")!!
 
 val globalJson = Json {
     prettyPrint = false
     isLenient = true
     ignoreUnknownKeys = true
     encodeDefaults = true
+    explicitNulls = false
 }
 
 val globalYaml = Yaml(
@@ -46,23 +54,20 @@ val unused = {
                 config = newConfig
             }
             if (previousConfig.apiProviders != newConfig.apiProviders) {
-                logger.info("Refresh apiProviders: ${newConfig.apiProviders.keys}")
                 apiProviderProperty.set(newConfig.apiProviders)
             }
             if (previousConfig.lmStudio != newConfig.lmStudio) {
-                logger.info("Restart lmStudioServer: port ${newConfig.lmStudio.port} enabled: ${newConfig.lmStudio.enabled}")
                 val previousServer = lmStudioServer
                 previousServer?.stop()
                 lmStudioConfigProperty.set(newConfig.lmStudio)
             }
             if (previousConfig.ollama != newConfig.ollama) {
-                logger.info("Restart ollamaServer: port ${newConfig.ollama.port} enabled: ${newConfig.ollama.enabled}")
                 val previousServer = ollamaServer
                 previousServer?.stop()
                 ollamaConfigProperty.set(newConfig.ollama)
             }
         } catch (e: SerializationException) {
-            logger.error("Config: ${e.message}")
+            configLogger.error("${e.message}")
         }
     }
 }()
@@ -81,7 +86,11 @@ private val apiProviderProperty = AutoUpdatePropertyRoot(
     initValue = config.apiProviders
 )
 
-val apiProviders by apiProviderProperty
+@OptIn(DelicateCoroutinesApi::class)
+val apiProviders by apiProviderProperty.subproperty {
+    GlobalScope.launch { apiLogger.info("Model list loaded with: ${it.listModelNames()}") }
+    it
+}
 
 private val lmStudioConfigProperty = AutoUpdatePropertyRoot(
     sync = true,
@@ -89,16 +98,17 @@ private val lmStudioConfigProperty = AutoUpdatePropertyRoot(
     initValue = config.lmStudio
 )
 
-val lmStudioServer by lmStudioConfigProperty.subproperty {
-    if (it.enabled)
+val lmStudioServer by lmStudioConfigProperty.subproperty { config ->
+    if (config.enabled) {
+        lmStudioLogger.info("LM Studio Server started at ${config.port}")
         embeddedServer(
-            factory = io.ktor.server.cio.CIO,
-            port = it.port,
-            watchPaths = emptyList()
-        ) {
-            configureLmStudioServer()
-        }.apply { start(wait = false) }
-    else null
+            factory = CIO,
+            environment = applicationEnvironment { log = lmStudioLogger.filterKtorLogging() },
+            port = config.port,
+            host = config.host,
+            module = { configureLmStudioServer() }
+        ).apply { start(wait = false) }
+    } else null
 }
 
 private val ollamaConfigProperty = AutoUpdatePropertyRoot(
@@ -108,15 +118,16 @@ private val ollamaConfigProperty = AutoUpdatePropertyRoot(
 )
 
 val ollamaServer by ollamaConfigProperty.subproperty {
-    if(it.enabled)
+    if (it.enabled) {
+        ollamaLogger.info("Ollama Server started at ${it.port}")
         embeddedServer(
-            factory = io.ktor.server.cio.CIO,
+            factory = CIO,
+            environment = applicationEnvironment { log = ollamaLogger.filterKtorLogging() },
             port = it.port,
-            watchPaths = emptyList()
-        ) {
-            configureOllamaServer()
-        }.apply { start(wait = false) }
-    else null
+            host = it.host,
+            module = { configureOllamaServer() }
+        ).apply { start(wait = false) }
+    } else null
 }
 
 inline fun <reified T> String.decodeYaml() = globalYaml.decodeFromString<T>(this)
