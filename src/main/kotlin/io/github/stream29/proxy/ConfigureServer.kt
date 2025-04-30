@@ -54,6 +54,7 @@ fun Application.configureOllamaServer() {
 
         post("/api/chat") {
             val request = call.receive<OChatRequest>()
+            log.info(request.encodeJson())
             val apiProvider = apiProviders[request.model.substringBefore('/')]
             if (apiProvider == null) {
                 call.respond(HttpStatusCode.NotFound)

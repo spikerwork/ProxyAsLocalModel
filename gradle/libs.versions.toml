@@ -10,10 +10,13 @@ logback = "1.4.11"
 streamlin = "3.1.0"
 json-schema-generator = "1.0.2"
 kaml = "0.77.1"
+openai-client = "4.0.1"
+
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
@@ -25,6 +28,7 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 streamlin = { module = "io.github.stream29:streamlin", version.ref = "streamlin" }
 json-schema-generator = { module = "io.github.stream29:json-schema-generator", version.ref = "json-schema-generator" }
 kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
+openai-client = { module = "com.aallam.openai:openai-client", version.ref = "openai-client" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

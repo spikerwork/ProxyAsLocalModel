@@ -23,9 +23,9 @@ data class QwenApiProvider(
 ) : ApiProvider {
     override suspend fun getModelNameList(): List<String> = modelList
     override suspend fun generateLStream(
-        lRequest: LChatCompletionRequest
+        request: LChatCompletionRequest
     ): Flow<LChatCompletionResponseChunk> {
-        return generateQStream(lRequest.asQRequest()).map { it.asLChunk(lRequest.model) }
+        return generateQStream(request.asQRequest()).map { it.asLChunk(request.model) }
     }
 
     override suspend fun generateOStream(oRequest: OChatRequest): Flow<OChatResponseChunk> {
