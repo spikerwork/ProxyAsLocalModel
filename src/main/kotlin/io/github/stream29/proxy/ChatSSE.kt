@@ -13,10 +13,13 @@ suspend inline fun <reified T> ApplicationCall.respondChatSSE(
     streamEndToken: String,
     flow: Flow<T>
 ) = respondBytesWriter(ContentType.Text.EventStream) {
-    flow.collect {
-        writeString("$streamPrefix ${it.encodeJson()}$CRLF")
-        flush()
+    try {
+        flow.collect {
+            writeString("$streamPrefix ${it.encodeJson()}$CRLF")
+            flush()
+        }
+        writeString("$streamEndToken$CRLF$CRLF")
+    } catch (e: Throwable) {
+        writeString(e.stackTraceToString())
     }
-    writeString("$streamEndToken$CRLF$CRLF")
-    flush()
 }

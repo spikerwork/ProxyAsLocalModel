@@ -47,10 +47,8 @@ class GenerationRecorder(
     }
 
     suspend fun onError(message: String, e: Throwable) {
-        mutex.withLock {
-            dump()
-            logger.error(message, e)
-        }
+        dump()
+        logger.error(message, e)
     }
 }
 

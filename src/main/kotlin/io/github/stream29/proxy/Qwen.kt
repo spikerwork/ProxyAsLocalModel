@@ -32,6 +32,8 @@ data class QwenApiProvider(
         return generateQStream(oRequest.asQRequest()).map { it.asOChunk(oRequest.model) }
     }
 
+    override fun close() {}
+
     private fun LChatCompletionRequest.asQRequest(): GenerationParam = buildQRequest {
         model(model)
         apiKey(apiKey)
@@ -92,7 +94,6 @@ data class QwenApiProvider(
 }
 
 private suspend fun generateQStream(qRequest: GenerationParam): Flow<GenerationResult> {
-    qwenLogger.info("($)Request ${qRequest.model} with messages: ${qRequest.messages.joinToString("\n") { "${it.role}: ${it.content}" }}")
     val generation = Generation()
     val recorder = GenerationRecorder(qwenLogger)
     recorder.onRequest(qRequest.prettyPrint())
