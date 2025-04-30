@@ -14,7 +14,7 @@ suspend inline fun <reified T> ApplicationCall.respondChatSSE(
     flow: Flow<T>
 ) = respondBytesWriter(ContentType.Text.EventStream) {
     flow.collect {
-        writeString("$streamPrefix ${it.encodeJson<T>()}$CRLF")
+        writeString("$streamPrefix ${it.encodeJson()}$CRLF")
         flush()
     }
     writeString("$streamEndToken$CRLF$CRLF")
