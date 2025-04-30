@@ -28,8 +28,8 @@ data class QwenApiProvider(
         return generateQStream(request.asQRequest()).map { it.asLChunk(request.model) }
     }
 
-    override suspend fun generateOStream(oRequest: OChatRequest): Flow<OChatResponseChunk> {
-        return generateQStream(oRequest.asQRequest()).map { it.asOChunk(oRequest.model) }
+    override suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk> {
+        return generateQStream(request.asQRequest()).map { it.asOChunk(request.model) }
     }
 
     override fun close() {}
