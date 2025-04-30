@@ -7,11 +7,21 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Config(
-    val port: Int = 1235,
-    val connectTimeout: Long = 30000,
-    val requestTimeout: Long = 60000,
-    val socketTimeout: Long = 60000,
+    val lmStudio: LmStudioConfig = LmStudioConfig(),
+    val ollama: OllamaConfig = OllamaConfig(),
     val apiProviders: Map<String, ApiProvider>
+)
+
+@Serializable
+data class LmStudioConfig(
+    val port: Int = 1235,
+    val enabled: Boolean = true,
+)
+
+@Serializable
+data class OllamaConfig(
+    val port: Int = 11435,
+    val enabled: Boolean = true,
 )
 
 @SerialName("ApiProvider")

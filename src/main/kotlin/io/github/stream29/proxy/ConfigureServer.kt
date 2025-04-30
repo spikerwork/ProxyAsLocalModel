@@ -13,7 +13,7 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import org.slf4j.event.Level
 
-fun Application.configureServer() {
+fun Application.configureLmStudioServer() {
     install(ContentNegotiation) {
         json(globalJson)
     }
@@ -44,4 +44,8 @@ fun Application.configureServer() {
             call.respondChatSSE(chunkFlow)
         }
     }
+}
+
+fun Application.configureOllamaServer() {
+
 }

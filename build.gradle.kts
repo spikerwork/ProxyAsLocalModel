@@ -35,6 +35,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.77.1")
 
     testImplementation(kotlin("test"))
+    testImplementation("io.ktor:ktor-server-test-host:3.0.0")
 }
 
 kotlin {
