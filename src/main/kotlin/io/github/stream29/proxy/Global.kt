@@ -32,12 +32,6 @@ val globalJson = Json {
     explicitNulls = false
 }
 
-val prettyJson = Json {
-    prettyPrint = true
-    encodeDefaults = true
-    explicitNulls = true
-}
-
 val globalYaml = Yaml(
     configuration = YamlConfiguration(
         polymorphismStyle = PolymorphismStyle.Property,
@@ -49,10 +43,10 @@ val configFile: File = File("config.yml")
 
 @Suppress("unused")
 val unused = {
-    watch(configFile) {
-        if (!it.exists())
+    watch(configFile) { file ->
+        if (!file.exists())
             return@watch
-        val text = it.readText()
+        val text = file.readText()
         try {
             val previousConfig = config
             val newConfig = text.decodeYaml<Config>()
@@ -60,6 +54,8 @@ val unused = {
                 config = newConfig
             }
             if (previousConfig.apiProviders != newConfig.apiProviders) {
+                val previousApiProviders = apiProviders
+                previousApiProviders.values.forEach { it.close() }
                 apiProviderProperty.set(newConfig.apiProviders)
             }
             if (previousConfig.lmStudio != newConfig.lmStudio) {
@@ -138,4 +134,3 @@ val ollamaServer by ollamaConfigProperty.subproperty {
 
 inline fun <reified T> String.decodeYaml() = globalYaml.decodeFromString<T>(this)
 inline fun <reified T> T.encodeJson() = globalJson.encodeToString(this)
-inline fun <reified T> T.encodePrettyJson(): String = prettyJson.encodeToString(this)

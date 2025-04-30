@@ -29,7 +29,7 @@ data class OllamaConfig(
 @SerialName("ApiProvider")
 @RefWithSerialName
 @Serializable
-sealed interface ApiProvider {
+sealed interface ApiProvider: AutoCloseable {
     suspend fun getModelNameList(): List<String>
     suspend fun generateLStream(request: LChatCompletionRequest): Flow<LChatCompletionResponseChunk>
     suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk>
