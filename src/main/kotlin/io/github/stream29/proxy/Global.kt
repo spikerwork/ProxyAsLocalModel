@@ -16,13 +16,13 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
-import org.slf4j.helpers.NOPLogger
 import java.io.File
 
 val configLogger = LoggerFactory.getLogger("Config")!!
-val apiLogger = LoggerFactory.getLogger("API")!!
+val modelListLogger = LoggerFactory.getLogger("Model List")!!
 val lmStudioLogger = LoggerFactory.getLogger("LM Studio Server")!!
 val ollamaLogger = LoggerFactory.getLogger("Ollama Server")!!
+val qwenLogger = LoggerFactory.getLogger("Qwen")!!
 
 val globalJson = Json {
     prettyPrint = false
@@ -30,6 +30,12 @@ val globalJson = Json {
     ignoreUnknownKeys = true
     encodeDefaults = true
     explicitNulls = false
+}
+
+val prettyJson = Json {
+    prettyPrint = true
+    encodeDefaults = true
+    explicitNulls = true
 }
 
 val globalYaml = Yaml(
@@ -88,7 +94,7 @@ private val apiProviderProperty = AutoUpdatePropertyRoot(
 
 @OptIn(DelicateCoroutinesApi::class)
 val apiProviders by apiProviderProperty.subproperty {
-    GlobalScope.launch { apiLogger.info("Model list loaded with: ${it.listModelNames()}") }
+    GlobalScope.launch { modelListLogger.info("Model list loaded with: ${it.listModelNames()}") }
     it
 }
 
@@ -132,3 +138,4 @@ val ollamaServer by ollamaConfigProperty.subproperty {
 
 inline fun <reified T> String.decodeYaml() = globalYaml.decodeFromString<T>(this)
 inline fun <reified T> T.encodeJson() = globalJson.encodeToString(this)
+inline fun <reified T> T.encodePrettyJson(): String = prettyJson.encodeToString(this)

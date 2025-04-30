@@ -7,5 +7,6 @@ fun Logger.filterKtorLogging(): Logger =
         override fun info(msg: String) {
             if (msg.startsWith("Application started in") || msg.startsWith("Responding at"))
                 return
+            this@filterKtorLogging.info(msg)
         }
     }

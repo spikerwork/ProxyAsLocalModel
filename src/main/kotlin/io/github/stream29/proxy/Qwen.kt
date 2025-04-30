@@ -1,12 +1,13 @@
 package io.github.stream29.proxy
 
 import com.alibaba.dashscope.aigc.generation.Generation
-import com.alibaba.dashscope.aigc.generation.GenerationOutput
 import com.alibaba.dashscope.aigc.generation.GenerationParam
 import com.alibaba.dashscope.aigc.generation.GenerationResult
 import com.alibaba.dashscope.common.Message
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,71 +23,97 @@ data class QwenApiProvider(
 ) : ApiProvider {
     override suspend fun getModelNameList(): List<String> = modelList
     override suspend fun generateLStream(
-        request: LChatCompletionRequest
+        lRequest: LChatCompletionRequest
     ): Flow<LChatCompletionResponseChunk> {
-        val generation = Generation()
-        val request = buildRequest {
-            model(request.model)
-            apiKey(apiKey)
-            enableSearch(enableSearch)
-            enableThinking(enableThinking)
-            incrementalOutput(request.stream)
-            temperature(request.temperature.toFloat())
-            messages(
-                request.messages.map {
-                    buildMessage {
-                        role(it.role)
-                        content(it.content)
-                    }
-                }
-            )
-        }
-        return generation.streamCall(request).asFlow().map {
-            LChatCompletionResponseChunk(
-                id = it.requestId,
-                model = request.model,
-                choices = listOf(
-                    LChatCompletionChoice(
-                        delta = LChatMessage(
-                            role = "assistant",
-                            content = it.textOrBlank()
-                        ),
-                        finishReason = it.finishReasonOrNull(),
-                    )
-                )
-            )
-        }
+        return generateQStream(lRequest.asQRequest()).map { it.asLChunk(lRequest.model) }
     }
 
-    override suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk> {
-        val generation = Generation()
-        val request = buildRequest {
-            model(request.model)
-            apiKey(apiKey)
-            enableSearch(enableSearch)
-            enableThinking(enableThinking)
-            incrementalOutput(request.stream)
-            temperature(request.options.temperature.toFloat())
-            messages(
-                request.messages.map {
-                    buildMessage {
-                        role(it.role)
-                        content(it.content)
-                    }
+    override suspend fun generateOStream(oRequest: OChatRequest): Flow<OChatResponseChunk> {
+        return generateQStream(oRequest.asQRequest()).map { it.asOChunk(oRequest.model) }
+    }
+
+    private fun LChatCompletionRequest.asQRequest(): GenerationParam = buildQRequest {
+        model(model)
+        apiKey(apiKey)
+        enableSearch(enableSearch)
+        enableThinking(enableThinking)
+        incrementalOutput(stream)
+        temperature(temperature.toFloat())
+        messages(
+            messages.map {
+                buildQMessage {
+                    role(it.role)
+                    content(it.content)
                 }
-            )
-        }
-        return generation.streamCall(request).asFlow().map {
-            OChatResponseChunk(
-                model = request.model,
-                message = OChatMessage(
+            }
+        )
+    }
+
+    private fun GenerationResult.asOChunk(modelName: String) = OChatResponseChunk(
+        model = modelName,
+        message = OChatMessage(
+            role = "assistant",
+            content = textOrNull() ?: "",
+        ),
+        done = finishReasonOrNull() != null,
+        doneReason = finishReasonOrNull()
+    )
+
+    private fun GenerationResult.asLChunk(modelName: String) = LChatCompletionResponseChunk(
+        id = requestId,
+        model = modelName,
+        choices = listOf(
+            LChatCompletionChoice(
+                delta = LChatMessage(
                     role = "assistant",
-                    content = it.textOrBlank()
+                    content = textOrNull() ?: "",
                 ),
-                done = it.finishReasonOrNull() != null,
-                doneReason = it.finishReasonOrNull()
+                finishReason = finishReasonOrNull(),
             )
+        )
+    )
+
+    private fun OChatRequest.asQRequest(): GenerationParam = buildQRequest {
+        model(model)
+        apiKey(apiKey)
+        enableSearch(enableSearch)
+        enableThinking(enableThinking)
+        incrementalOutput(stream)
+        temperature(options.temperature.toFloat())
+        messages(
+            messages.map {
+                buildQMessage {
+                    role(it.role)
+                    content(it.content)
+                }
+            }
+        )
+    }
+}
+
+private suspend fun generateQStream(qRequest: GenerationParam): Flow<GenerationResult> {
+    qwenLogger.info("($)Request ${qRequest.model} with messages: ${qRequest.messages.joinToString("\n") { "${it.role}: ${it.content}" }}")
+    val generation = Generation()
+    val recorder = GenerationRecorder(qwenLogger)
+    recorder.onRequest(qRequest.prettyPrint())
+    return generation.streamCall(qRequest).asFlow()
+        .onEach { generationResult ->
+            generationResult.textOrNull()?.let { recorder.onPartialOutput(it) }
+            generationResult.reasoningOrNull()?.let { recorder.onPartialReasoning(it) }
+        }.onCompletion {
+            it?.let { recorder.onError("Error during generation", it) }
+            recorder.dump()
         }
+}
+
+private fun GenerationParam.prettyPrint() = buildString {
+    appendLine("Model: $model")
+    appendLine("Enable Search: $enableSearch")
+    appendLine("Enable Thinking: $enableThinking")
+    appendLine("Temperature: $temperature")
+    appendLine("Messages:")
+    messages.forEach { message ->
+        appendLine("${message.role}: ${message.content}")
     }
 }
 
@@ -96,17 +123,17 @@ private fun GenerationResult.finishReasonOrNull(): String? {
     return null
 }
 
-private fun GenerationResult.textOrBlank(): String {
-    if (output.choices.isNullOrEmpty()) {
-        return output.text ?: ""
-    }
-    return output.choices?.firstOrNull()?.message?.content ?: ""
-}
+private fun GenerationResult.textOrNull(): String? =
+    output.text?.takeIf { it.isNotEmpty() }
+        ?: output.choices?.firstOrNull()?.message?.content?.takeIf { it.isNotEmpty() }
 
-internal inline fun buildRequest(
+private fun GenerationResult.reasoningOrNull(): String? =
+    output.choices?.firstOrNull()?.message?.reasoningContent?.takeIf { it.isNotEmpty() }
+
+private inline fun buildQRequest(
     builderAction: GenerationParam.GenerationParamBuilder<*, *>.() -> Unit
-) = GenerationParam.builder().apply(builderAction).build()
+): GenerationParam = GenerationParam.builder().apply(builderAction).build()
 
-internal inline fun buildMessage(
+private inline fun buildQMessage(
     builderAction: Message.MessageBuilder<*, *>.() -> Unit
-) = Message.builder().apply(builderAction).build()
+): Message = Message.builder().apply(builderAction).build()
