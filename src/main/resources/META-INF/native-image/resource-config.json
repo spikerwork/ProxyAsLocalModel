@@ -3,6 +3,8 @@
   "includes":[{
     "pattern":"\\QMETA-INF/services/ch.qos.logback.classic.spi.Configurator\\E"
   }, {
+    "pattern":"\\QMETA-INF/services/io.ktor.client.HttpClientEngineContainer\\E"
+  }, {
     "pattern":"\\QMETA-INF/services/io.ktor.serialization.kotlinx.KotlinxSerializationExtensionProvider\\E"
   }, {
     "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
@@ -99,6 +101,12 @@
   }, {
     "pattern":"\\Qch/qos/logback/core/pattern\\E"
   }, {
+    "pattern":"\\Qch/qos/logback/core/recovery\\E"
+  }, {
+    "pattern":"\\Qch/qos/logback/core/rolling/helper\\E"
+  }, {
+    "pattern":"\\Qch/qos/logback/core/rolling\\E"
+  }, {
     "pattern":"\\Qch/qos/logback/core/sift\\E"
   }, {
     "pattern":"\\Qch/qos/logback/core/spi\\E"
@@ -116,6 +124,28 @@
     "pattern":"\\Qch/qos\\E"
   }, {
     "pattern":"\\Qch\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/api/exception\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/api/http\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/api/logging\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/api\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/client/internal/api\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/client/internal/extension\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/client/internal/http\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/client/internal\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai/client\\E"
+  }, {
+    "pattern":"\\Qcom/aallam/openai\\E"
+  }, {
+    "pattern":"\\Qcom/aallam\\E"
   }, {
     "pattern":"\\Qcom/charleskorn/kaml/internal\\E"
   }, {
@@ -231,6 +261,34 @@
   }, {
     "pattern":"\\Qio/github\\E"
   }, {
+    "pattern":"\\Qio/ktor/client/content\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/engine/okhttp\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/engine\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/api\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/auth/providers\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/auth\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/contentnegotiation\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/logging\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/sse\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins/websocket\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/plugins\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/request\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client/statement\\E"
+  }, {
+    "pattern":"\\Qio/ktor/client\\E"
+  }, {
     "pattern":"\\Qio/ktor/events\\E"
   }, {
     "pattern":"\\Qio/ktor/http/content\\E"
@@ -301,6 +359,8 @@
   }, {
     "pattern":"\\Qio/ktor/util\\E"
   }, {
+    "pattern":"\\Qio/ktor/utils/io/charsets\\E"
+  }, {
     "pattern":"\\Qio/ktor/utils/io\\E"
   }, {
     "pattern":"\\Qio/ktor/utils\\E"
@@ -354,8 +414,6 @@
     "pattern":"\\Qjava/lang/annotation\\E"
   }, {
     "pattern":"\\Qjava/lang/constant\\E"
-  }, {
-    "pattern":"\\Qjava/lang/foreign\\E"
   }, {
     "pattern":"\\Qjava/lang/instrument\\E"
   }, {
@@ -567,6 +625,8 @@
   }, {
     "pattern":"\\Qkotlin/collections/builders\\E"
   }, {
+    "pattern":"\\Qkotlin/collections/collections.kotlin_builtins\\E"
+  }, {
     "pattern":"\\Qkotlin/collections\\E"
   }, {
     "pattern":"\\Qkotlin/comparisons\\E"
@@ -663,6 +723,10 @@
   }, {
     "pattern":"\\Qkotlin/reflect/jvm/internal/impl/renderer\\E"
   }, {
+    "pattern":"\\Qkotlin/reflect/jvm/internal/impl/resolve/calls/inference\\E"
+  }, {
+    "pattern":"\\Qkotlin/reflect/jvm/internal/impl/resolve/calls\\E"
+  }, {
     "pattern":"\\Qkotlin/reflect/jvm/internal/impl/resolve/constants\\E"
   }, {
     "pattern":"\\Qkotlin/reflect/jvm/internal/impl/resolve/descriptorUtil\\E"
@@ -714,6 +778,8 @@
     "pattern":"\\Qkotlin/sequences\\E"
   }, {
     "pattern":"\\Qkotlin/text\\E"
+  }, {
+    "pattern":"\\Qkotlin/time/time.kotlin_builtins\\E"
   }, {
     "pattern":"\\Qkotlin/time\\E"
   }, {
@@ -768,6 +834,8 @@
     "pattern":"\\Qnet/thauvin\\E"
   }, {
     "pattern":"\\Qnet\\E"
+  }, {
+    "pattern":"\\Qokhttp3\\E"
   }, {
     "pattern":"\\Qokio/internal\\E"
   }, {
@@ -917,6 +985,14 @@
   }, {
     "pattern":"\\Qsun/security\\E"
   }, {
+    "pattern":"\\Qsun/text/resources/cldr/ext\\E"
+  }, {
+    "pattern":"\\Qsun/text/resources/cldr\\E"
+  }, {
+    "pattern":"\\Qsun/text/resources\\E"
+  }, {
+    "pattern":"\\Qsun/text\\E"
+  }, {
     "pattern":"\\Qsun/util/calendar\\E"
   }, {
     "pattern":"\\Qsun/util/cldr\\E"
@@ -937,6 +1013,8 @@
   }, {
     "pattern":"\\Qsun/util/resources\\E"
   }, {
+    "pattern":"\\Qsun/util/spi\\E"
+  }, {
     "pattern":"\\Qsun/util\\E"
   }, {
     "pattern":"\\Qsun\\E"
@@ -944,8 +1022,6 @@
     "pattern":"java.base:\\Qjava/lang/annotation\\E"
   }, {
     "pattern":"java.base:\\Qjava/lang/constant\\E"
-  }, {
-    "pattern":"java.base:\\Qjava/lang/foreign\\E"
   }, {
     "pattern":"java.base:\\Qjava/lang/instrument\\E"
   }, {
@@ -1091,6 +1167,12 @@
   }, {
     "pattern":"java.base:\\Qsun/security/provider/certpath\\E"
   }, {
+    "pattern":"java.base:\\Qsun/text/resources/cldr/ext\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/text/resources/cldr\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/text/resources\\E"
+  }, {
     "pattern":"java.base:\\Qsun/util/calendar\\E"
   }, {
     "pattern":"java.base:\\Qsun/util/cldr\\E"
@@ -1110,6 +1192,8 @@
     "pattern":"java.base:\\Qsun/util/resources/provider\\E"
   }, {
     "pattern":"java.base:\\Qsun/util/resources\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/util/spi\\E"
   }, {
     "pattern":"java.management:\\Qcom/sun/jmx/remote/internal/rmi\\E"
   }, {
