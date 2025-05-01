@@ -1,1 +1,130 @@
-{"type":"object","properties":{"lmStudio":{"type":"object","properties":{"port":{"type":"integer"},"host":{"type":"string"},"enabled":{"type":"boolean"}}},"ollama":{"type":"object","properties":{"port":{"type":"integer"},"host":{"type":"string"},"enabled":{"type":"boolean"}}},"apiProviders":{"type":"object","additionalProperties":{"$ref":"#/$defs/ApiProvider"}}},"required":["apiProviders"],"$defs":{"ApiProvider":{"anyOf":[{"allOf":[{"type":"object","properties":{"baseUrl":{"type":"string"},"apiKey":{"type":"string"},"modelList":{"type":"array","items":{"type":"string"}},"client":{"anyOf":[]}},"required":["baseUrl","apiKey","modelList"]},{"properties":{"type":{"enum":["OpenAi"]}},"required":["type"]}]},{"allOf":[{"type":"object","properties":{"modelList":{"type":"array","items":{"type":"string"}},"apiKey":{"type":"string"},"enableSearch":{"type":"boolean"},"enableThinking":{"type":"boolean"}},"required":["modelList","apiKey"]},{"properties":{"type":{"enum":["Qwen"]}},"required":["type"]}]}]}}}
+{
+    "type": "object",
+    "properties": {
+        "lmStudio": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                },
+                "host": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ollama": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                },
+                "host": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "apiProviders": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/$defs/ApiProvider"
+            }
+        }
+    },
+    "$defs": {
+        "ApiProvider": {
+            "anyOf": [
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "baseUrl": {
+                                    "type": "string"
+                                },
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "client": {
+                                    "anyOf": []
+                                }
+                            },
+                            "required": [
+                                "baseUrl",
+                                "apiKey",
+                                "modelList"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "OpenAi"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "enableSearch": {
+                                    "type": "boolean"
+                                },
+                                "enableThinking": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "modelList",
+                                "apiKey"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "Qwen"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
