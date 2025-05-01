@@ -59,9 +59,6 @@
                                     "items": {
                                         "type": "string"
                                     }
-                                },
-                                "client": {
-                                    "anyOf": []
                                 }
                             },
                             "required": [
@@ -75,46 +72,6 @@
                                 "type": {
                                     "enum": [
                                         "OpenAi"
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "type"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "allOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "modelList": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                },
-                                "apiKey": {
-                                    "type": "string"
-                                },
-                                "enableSearch": {
-                                    "type": "boolean"
-                                },
-                                "enableThinking": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "required": [
-                                "modelList",
-                                "apiKey"
-                            ]
-                        },
-                        {
-                            "properties": {
-                                "type": {
-                                    "enum": [
-                                        "Qwen"
                                     ]
                                 }
                             },
