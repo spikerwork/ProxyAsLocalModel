@@ -1,8 +1,10 @@
 package io.github.stream29.proxy.client
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Suppress("unused")
+@Serializable
 @SerialName("DashScope")
 data class DashScopeConfig(
     val apiKey: String,
@@ -14,6 +16,7 @@ data class DashScopeConfig(
 )
 
 @Suppress("unused")
+@Serializable
 @SerialName("DeepSeek")
 data class DeepSeekConfig(
     val apiKey: String,
@@ -25,6 +28,7 @@ data class DeepSeekConfig(
 )
 
 @Suppress("unused")
+@Serializable
 @SerialName("Mistral")
 data class MistralConfig(
     val apiKey: String,
@@ -36,6 +40,7 @@ data class MistralConfig(
 )
 
 @Suppress("unused")
+@Serializable
 @SerialName("SiliconFlow")
 data class SiliconFlowConfig(
     val apiKey: String,
@@ -47,6 +52,7 @@ data class SiliconFlowConfig(
 )
 
 @Suppress("unused")
+@Serializable
 @SerialName("Gemini")
 data class GeminiConfig(
     val apiKey: String,

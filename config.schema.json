@@ -48,6 +48,139 @@
                         {
                             "type": "object",
                             "properties": {
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "apiKey"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "DashScope"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "apiKey"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "DeepSeek"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "apiKey",
+                                "modelList"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "Gemini"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "apiKey"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "Mistral"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
                                 "baseUrl": {
                                     "type": "string"
                                 },
@@ -72,6 +205,40 @@
                                 "type": {
                                     "enum": [
                                         "OpenAi"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "apiKey": {
+                                    "type": "string"
+                                },
+                                "modelList": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "apiKey",
+                                "modelList"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "SiliconFlow"
                                     ]
                                 }
                             },
