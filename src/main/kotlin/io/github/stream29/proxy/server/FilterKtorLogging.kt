@@ -2,6 +2,7 @@ package io.github.stream29.proxy.server
 
 import org.slf4j.Logger
 
+@Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
 fun Logger.filterKtorLogging(): Logger =
     object : Logger by this {
         override fun info(msg: String) {
