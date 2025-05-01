@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class Config(
     val lmStudio: LmStudioConfig = LmStudioConfig(),
     val ollama: OllamaConfig = OllamaConfig(),
-    val apiProviders: Map<String, ApiProvider>
+    val apiProviders: Map<String, ApiProvider> = emptyMap(),
 )
 
 @Serializable

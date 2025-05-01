@@ -43,6 +43,10 @@ val configFile: File = File("config.yml")
 
 @Suppress("unused")
 val unused = {
+    if (!configFile.exists()) {
+        configFile.parentFile.mkdirs()
+        configFile.writeText(globalYaml.encodeToString(Config.serializer(), Config()))
+    }
     watch(configFile) { file ->
         if (!file.exists())
             return@watch
