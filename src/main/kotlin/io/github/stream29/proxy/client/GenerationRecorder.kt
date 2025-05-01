@@ -1,4 +1,4 @@
-package io.github.stream29.proxy
+package io.github.stream29.proxy.client
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

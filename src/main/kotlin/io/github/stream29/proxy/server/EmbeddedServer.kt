@@ -1,4 +1,4 @@
-package io.github.stream29.proxy
+package io.github.stream29.proxy.server
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.*

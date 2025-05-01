@@ -1,5 +1,6 @@
-package io.github.stream29.proxy
+package io.github.stream29.proxy.server
 
+import io.github.stream29.proxy.encodeJson
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
