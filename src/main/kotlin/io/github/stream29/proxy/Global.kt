@@ -1,6 +1,8 @@
 package io.github.stream29.proxy
 
 import com.charleskorn.kaml.*
+import io.github.stream29.jsonschemagenerator.SchemaGenerator
+import io.github.stream29.jsonschemagenerator.schemaOf
 import io.github.stream29.proxy.client.listModelNames
 import io.github.stream29.proxy.server.configureLmStudioServer
 import io.github.stream29.proxy.server.configureOllamaServer
@@ -25,6 +27,8 @@ import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import java.io.File
 
+val helpLogger = LoggerFactory.getLogger("Help")!!
+val schemaGenerator = SchemaGenerator()
 val configLogger = LoggerFactory.getLogger("Config")!!
 val modelListLogger = LoggerFactory.getLogger("Model List")!!
 val lmStudioLogger = LoggerFactory.getLogger("LM Studio Server")!!
@@ -56,13 +60,27 @@ val globalClient = HttpClient(io.ktor.client.engine.cio.CIO) {
     expectSuccess = true
 }
 
-val configFile: File = File("config.yml")
+val configFile = File("config.yml")
+val configSchemaFile = File("config.schema.yml")
 
 @Suppress("unused")
 val unused = {
     if (!configFile.exists()) {
-        configFile.parentFile.mkdirs()
-        configFile.writeText(globalYaml.encodeToString(Config.serializer(), Config()))
+        helpLogger.info("It looks that you are starting the program for the first time here.")
+        helpLogger.info("A default config file is created at ${configFile.absolutePath} with schema annotation.")
+        configFile.writeText(
+            """
+# ${'$'}schema: ./config.schema.yml
+lmStudio:
+  port: 1234
+ollama:
+  port: 11434
+apiProviders: {}
+"""
+        )
+        configSchemaFile.writeText(
+            globalYaml.encodeToString(schemaGenerator.schemaOf<Config>())
+        )
     }
     watch(configFile) { file ->
         if (!file.exists())
