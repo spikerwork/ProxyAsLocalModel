@@ -2,7 +2,6 @@ package io.github.stream29.proxy
 
 import com.charleskorn.kaml.*
 import io.github.stream29.jsonschemagenerator.SchemaGenerator
-import io.github.stream29.jsonschemagenerator.schemaOf
 import io.github.stream29.proxy.client.listModelNames
 import io.github.stream29.proxy.server.configureLmStudioServer
 import io.github.stream29.proxy.server.configureOllamaServer
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory
 import java.io.File
 
 val helpLogger = LoggerFactory.getLogger("Help")!!
-val schemaGenerator = SchemaGenerator()
 val configLogger = LoggerFactory.getLogger("Config")!!
 val modelListLogger = LoggerFactory.getLogger("Model List")!!
 val lmStudioLogger = LoggerFactory.getLogger("LM Studio Server")!!
