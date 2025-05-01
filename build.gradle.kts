@@ -22,12 +22,6 @@ dependencies {
     implementation(libs.ktor.client.okhttp)
     implementation(libs.openai.client)
     
-    implementation(libs.kotlinx.coroutines.rx2)
-    
-    implementation(libs.dashscope.sdk.java) {
-        exclude("org.slf4j", "slf4j-simple")
-    }
-    
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
     
@@ -49,6 +43,7 @@ graalvmNative {
         named("main") {
             imageName.set("Proxy")
             mainClass.set("io.github.stream29.proxy.MainKt")
+            buildArgs("--enable-native-access=ALL-UNNAMED")
         }
     }
 }

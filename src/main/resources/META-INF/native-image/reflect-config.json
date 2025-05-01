@@ -155,51 +155,6 @@
   "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationLogprobs",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationLogprobs$Content",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationLogprobs$TopLogprob",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationOutput",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationOutput$Choice",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationOutputTokenDetails",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.GenerationUsage",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.SearchInfo",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.alibaba.dashscope.aigc.generation.SearchInfo$SearchResult",
-  "allDeclaredFields":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"com.intellij.rt.execution.application.AppMainV2$Agent",
   "methods":[{"name":"premain","parameterTypes":["java.lang.String","java.lang.instrument.Instrumentation"] }]
 },
@@ -603,10 +558,6 @@
   "queryAllPublicMethods":true
 },
 {
-  "name":"java.lang.reflect.AccessibleObject",
-  "fields":[{"name":"override"}]
-},
-{
   "name":"java.math.BigDecimal"
 },
 {
@@ -665,22 +616,13 @@
   "name":"java.security.interfaces.RSAPublicKey"
 },
 {
-  "name":"java.sql.Date"
-},
-{
-  "name":"java.util.ArrayList",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"java.util.Date"
 },
 {
-  "name":"java.util.List",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "name":"java.util.List"
 },
 {
-  "name":"java.util.Map",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "name":"java.util.Map"
 },
 {
   "name":"java.util.PropertyPermission",
@@ -697,10 +639,6 @@
 {
   "name":"java.util.concurrent.atomic.Striped64",
   "fields":[{"name":"base"}, {"name":"cellsBusy"}]
-},
-{
-  "name":"java.util.concurrent.atomic.Striped64$Cell",
-  "fields":[{"name":"value"}]
 },
 {
   "name":"java.util.logging.LogManager",
@@ -998,11 +936,6 @@
 {
   "name":"sun.management.RuntimeImpl",
   "queryAllPublicConstructors":true
-},
-{
-  "name":"sun.misc.Unsafe",
-  "fields":[{"name":"theUnsafe"}],
-  "methods":[{"name":"allocateInstance","parameterTypes":["java.lang.Class"] }]
 },
 {
   "name":"sun.rmi.registry.RegistryImpl_Stub"
