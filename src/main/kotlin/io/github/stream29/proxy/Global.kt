@@ -53,6 +53,7 @@ val globalClient = HttpClient(io.ktor.client.engine.cio.CIO) {
     install(ContentNegotiation) {
         json(globalJson)
     }
+    expectSuccess = true
 }
 
 val configFile: File = File("config.yml")

@@ -18,6 +18,8 @@ dependencies {
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.call.logging)
     implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.server.host.common)
+    implementation(libs.ktor.server.status.pages)
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
@@ -32,7 +34,7 @@ dependencies {
     implementation(libs.streamlin)
     implementation(libs.json.schema.generator)
     implementation(libs.kaml)
-    
+
     testImplementation(kotlin("test"))
 }
 
