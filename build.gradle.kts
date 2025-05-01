@@ -47,8 +47,8 @@ kotlin {
 graalvmNative {
     binaries {
         named("main") {
-            imageName.set("application")
-            mainClass.set("io.github.stream29.MainKt")
+            imageName.set("Proxy")
+            mainClass.set("io.github.stream29.proxy.MainKt")
         }
     }
 }

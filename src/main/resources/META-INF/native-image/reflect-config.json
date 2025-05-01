@@ -281,35 +281,35 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"io.github.stream29.proxy.LChatCompletionRequest",
+  "name":"io.github.stream29.proxy.server.LChatCompletionRequest",
   "fields":[{"name":"Companion"}]
 },
 {
-  "name":"io.github.stream29.proxy.LChatCompletionRequest$Companion",
+  "name":"io.github.stream29.proxy.server.LChatCompletionRequest$Companion",
   "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {
-  "name":"io.github.stream29.proxy.LModelResponse",
+  "name":"io.github.stream29.proxy.server.LModelResponse",
   "fields":[{"name":"Companion"}]
 },
 {
-  "name":"io.github.stream29.proxy.LModelResponse$Companion",
+  "name":"io.github.stream29.proxy.server.LModelResponse$Companion",
   "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {
-  "name":"io.github.stream29.proxy.OChatRequest",
+  "name":"io.github.stream29.proxy.server.OChatRequest",
   "fields":[{"name":"Companion"}]
 },
 {
-  "name":"io.github.stream29.proxy.OChatRequest$Companion",
+  "name":"io.github.stream29.proxy.server.OChatRequest$Companion",
   "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {
-  "name":"io.github.stream29.proxy.OModelResponse",
+  "name":"io.github.stream29.proxy.server.OModelResponse",
   "fields":[{"name":"Companion"}]
 },
 {
-  "name":"io.github.stream29.proxy.OModelResponse$Companion",
+  "name":"io.github.stream29.proxy.server.OModelResponse$Companion",
   "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {

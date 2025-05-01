@@ -253,6 +253,10 @@
   }, {
     "pattern":"\\Qio/github/stream29/jsonschemagenerator\\E"
   }, {
+    "pattern":"\\Qio/github/stream29/proxy/client\\E"
+  }, {
+    "pattern":"\\Qio/github/stream29/proxy/server\\E"
+  }, {
     "pattern":"\\Qio/github/stream29/proxy\\E"
   }, {
     "pattern":"\\Qio/github/stream29/streamlin\\E"
