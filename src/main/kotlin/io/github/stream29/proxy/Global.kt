@@ -61,7 +61,6 @@ val globalClient = HttpClient(io.ktor.client.engine.cio.CIO) {
 }
 
 val configFile = File("config.yml")
-val configSchemaFile = File("config.schema.yml")
 
 @Suppress("unused")
 val unused = {
@@ -70,16 +69,13 @@ val unused = {
         helpLogger.info("A default config file is created at ${configFile.absolutePath} with schema annotation.")
         configFile.writeText(
             """
-# ${'$'}schema: ./config.schema.yml
+# ${'$'}schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v0.schema.json
 lmStudio:
   port: 1234
 ollama:
   port: 11434
 apiProviders: {}
 """
-        )
-        configSchemaFile.writeText(
-            globalYaml.encodeToString(schemaGenerator.schemaOf<Config>())
         )
     }
     watch(configFile) { file ->
