@@ -419,6 +419,8 @@
   }, {
     "pattern":"\\Qjava/lang/constant\\E"
   }, {
+    "pattern":"\\Qjava/lang/foreign\\E"
+  }, {
     "pattern":"\\Qjava/lang/instrument\\E"
   }, {
     "pattern":"\\Qjava/lang/invoke\\E"
@@ -1026,6 +1028,8 @@
     "pattern":"java.base:\\Qjava/lang/annotation\\E"
   }, {
     "pattern":"java.base:\\Qjava/lang/constant\\E"
+  }, {
+    "pattern":"java.base:\\Qjava/lang/foreign\\E"
   }, {
     "pattern":"java.base:\\Qjava/lang/instrument\\E"
   }, {
