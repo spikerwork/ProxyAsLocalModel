@@ -38,7 +38,6 @@ dependencies {
     implementation(libs.kaml)
     
     testImplementation(kotlin("test"))
-    testImplementation(libs.ktor.server.test.host)
 }
 
 kotlin {

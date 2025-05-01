@@ -8,7 +8,7 @@ dashscope-sdk-java = "2.19.4"
 kotlinx-serialization = "1.6.2"
 logback = "1.4.11"
 streamlin = "3.1.0"
-json-schema-generator = "1.0.2"
+json-schema-generator = "1.0.5"
 kaml = "0.77.1"
 openai-client = "4.0.1"
 
