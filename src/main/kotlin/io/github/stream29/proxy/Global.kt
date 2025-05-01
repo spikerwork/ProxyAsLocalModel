@@ -1,6 +1,8 @@
 package io.github.stream29.proxy
 
+import com.charleskorn.kaml.MultiLineStringStyle
 import com.charleskorn.kaml.PolymorphismStyle
+import com.charleskorn.kaml.SingleLineStringStyle
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import io.github.stream29.proxy.client.listModelNames
@@ -19,6 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -27,6 +30,7 @@ val configLogger = LoggerFactory.getLogger("Config")!!
 val modelListLogger = LoggerFactory.getLogger("Model List")!!
 val lmStudioLogger = LoggerFactory.getLogger("LM Studio Server")!!
 val ollamaLogger = LoggerFactory.getLogger("Ollama Server")!!
+val openAiLogger = LoggerFactory.getLogger("Open AI Client")!!
 val qwenLogger = LoggerFactory.getLogger("Qwen")!!
 
 val globalJson = Json {
@@ -40,7 +44,9 @@ val globalJson = Json {
 val globalYaml = Yaml(
     configuration = YamlConfiguration(
         polymorphismStyle = PolymorphismStyle.Property,
-        strictMode = false
+        strictMode = false,
+        singleLineStringStyle = SingleLineStringStyle.PlainExceptAmbiguous,
+        multiLineStringStyle = MultiLineStringStyle.Literal,
     )
 )
 
@@ -142,4 +148,5 @@ val ollamaServer by ollamaConfigProperty.subproperty {
 }
 
 inline fun <reified T> String.decodeYaml() = globalYaml.decodeFromString<T>(this)
+inline fun <reified T> T.encodeYaml() = globalYaml.encodeToString(this)
 inline fun <reified T> T.encodeJson() = globalJson.encodeToString(this)

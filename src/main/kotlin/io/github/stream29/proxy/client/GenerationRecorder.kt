@@ -8,7 +8,7 @@ class GenerationRecorder(
     val logger: Logger,
 ) {
     private val mutex = Mutex()
-    private val buffer = StringBuffer()
+    private val buffer = StringBuilder()
 
     @Volatile
     private var state = GenerationState.INIT
@@ -46,9 +46,12 @@ class GenerationRecorder(
         }
     }
 
-    suspend fun onError(message: String, e: Throwable) {
-        dump()
-        logger.error(message, e)
+    suspend fun dumpOnError(e: Throwable) {
+        mutex.withLock {
+            buffer.append("\nError: \n")
+            logger.error(buffer.toString(), e)
+            buffer.setLength(0)
+        }
     }
 }
 

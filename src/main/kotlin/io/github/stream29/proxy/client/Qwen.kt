@@ -104,8 +104,8 @@ private suspend fun generateQStream(qRequest: GenerationParam): Flow<GenerationR
             generationResult.textOrNull()?.let { recorder.onPartialOutput(it) }
             generationResult.reasoningOrNull()?.let { recorder.onPartialReasoning(it) }
         }.onCompletion {
-            it?.let { recorder.onError("Error during generation", it) }
-            recorder.dump()
+            if (it != null) recorder.dumpOnError(it)
+            else recorder.dump()
         }
 }
 

@@ -10,9 +10,13 @@ import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.LoggingConfig
 import com.aallam.openai.client.OpenAI
 import com.aallam.openai.client.OpenAIHost
+import io.github.stream29.proxy.encodeYaml
+import io.github.stream29.proxy.openAiLogger
 import io.github.stream29.proxy.server.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -32,16 +36,29 @@ data class OpenAiConfig(
 
     override suspend fun getModelNameList(): List<String> = modelList
     override suspend fun generateLStream(request: LChatCompletionRequest): Flow<LChatCompletionResponseChunk> {
-        return client.chatCompletions(request.asOpenAiRequest()).map { it.asLChatCompletionResponseChunk() }
+        return client.chatCompletionsRecording(request.asOpenAiRequest()).map { it.asLChatCompletionResponseChunk() }
     }
 
     override suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk> {
-        return client.chatCompletions(request.asOpenAiRequest()).map { it.asOChatResponseChunk() }
+        return client.chatCompletionsRecording(request.asOpenAiRequest()).map { it.asOChatResponseChunk() }
     }
 
     override fun close() {
         client.close()
     }
+}
+
+private suspend fun OpenAI.chatCompletionsRecording(
+    request: ChatCompletionRequest,
+): Flow<ChatCompletionChunk> {
+    val recorder = GenerationRecorder(openAiLogger)
+    recorder.onRequest(request.encodeYaml())
+    return chatCompletions(request)
+        .onEach { recorder.onPartialOutput(it.encodeYaml()) }
+        .onCompletion {
+            if (it != null) recorder.dumpOnError(it)
+            else recorder.dump()
+        }
 }
 
 private fun OChatRequest.asOpenAiRequest() =
