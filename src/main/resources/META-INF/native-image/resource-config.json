@@ -3,8 +3,6 @@
   "includes":[{
     "pattern":"\\QMETA-INF/services/ch.qos.logback.classic.spi.Configurator\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/io.ktor.client.HttpClientEngineContainer\\E"
-  }, {
     "pattern":"\\QMETA-INF/services/io.ktor.serialization.kotlinx.KotlinxSerializationExtensionProvider\\E"
   }, {
     "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
@@ -122,28 +120,6 @@
     "pattern":"\\Qch/qos\\E"
   }, {
     "pattern":"\\Qch\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/api/exception\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/api/http\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/api/logging\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/api\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/client/internal/api\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/client/internal/extension\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/client/internal/http\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/client/internal\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai/client\\E"
-  }, {
-    "pattern":"\\Qcom/aallam/openai\\E"
-  }, {
-    "pattern":"\\Qcom/aallam\\E"
   }, {
     "pattern":"\\Qcom/charleskorn/kaml/internal\\E"
   }, {
@@ -265,19 +241,13 @@
   }, {
     "pattern":"\\Qio/ktor/client/content\\E"
   }, {
-    "pattern":"\\Qio/ktor/client/engine/okhttp\\E"
+    "pattern":"\\Qio/ktor/client/engine/cio\\E"
   }, {
     "pattern":"\\Qio/ktor/client/engine\\E"
   }, {
     "pattern":"\\Qio/ktor/client/plugins/api\\E"
   }, {
-    "pattern":"\\Qio/ktor/client/plugins/auth/providers\\E"
-  }, {
-    "pattern":"\\Qio/ktor/client/plugins/auth\\E"
-  }, {
     "pattern":"\\Qio/ktor/client/plugins/contentnegotiation\\E"
-  }, {
-    "pattern":"\\Qio/ktor/client/plugins/logging\\E"
   }, {
     "pattern":"\\Qio/ktor/client/plugins/sse\\E"
   }, {
@@ -300,6 +270,12 @@
     "pattern":"\\Qio/ktor/network/selector\\E"
   }, {
     "pattern":"\\Qio/ktor/network/sockets\\E"
+  }, {
+    "pattern":"\\Qio/ktor/network/tls/extensions\\E"
+  }, {
+    "pattern":"\\Qio/ktor/network/tls/platform\\E"
+  }, {
+    "pattern":"\\Qio/ktor/network/tls\\E"
   }, {
     "pattern":"\\Qio/ktor/network\\E"
   }, {
@@ -334,6 +310,8 @@
     "pattern":"\\Qio/ktor/server/plugins/calllogging\\E"
   }, {
     "pattern":"\\Qio/ktor/server/plugins/contentnegotiation\\E"
+  }, {
+    "pattern":"\\Qio/ktor/server/plugins/statuspages\\E"
   }, {
     "pattern":"\\Qio/ktor/server/plugins\\E"
   }, {
@@ -520,6 +498,10 @@
     "pattern":"\\Qjavax/management\\E"
   }, {
     "pattern":"\\Qjavax/naming\\E"
+  }, {
+    "pattern":"\\Qjavax/net/ssl\\E"
+  }, {
+    "pattern":"\\Qjavax/net\\E"
   }, {
     "pattern":"\\Qjavax/security/auth/callback\\E"
   }, {
@@ -783,11 +765,11 @@
   }, {
     "pattern":"\\Qkotlin/text\\E"
   }, {
-    "pattern":"\\Qkotlin/time/time.kotlin_builtins\\E"
-  }, {
     "pattern":"\\Qkotlin/time\\E"
   }, {
     "pattern":"\\Qkotlin\\E"
+  }, {
+    "pattern":"\\Qkotlinx/coroutines/channels\\E"
   }, {
     "pattern":"\\Qkotlinx/coroutines/internal\\E"
   }, {
@@ -838,8 +820,6 @@
     "pattern":"\\Qnet/thauvin\\E"
   }, {
     "pattern":"\\Qnet\\E"
-  }, {
-    "pattern":"\\Qokhttp3\\E"
   }, {
     "pattern":"\\Qokio/internal\\E"
   }, {
@@ -1093,6 +1073,8 @@
   }, {
     "pattern":"java.base:\\Qjava/util/zip\\E"
   }, {
+    "pattern":"java.base:\\Qjavax/net/ssl\\E"
+  }, {
     "pattern":"java.base:\\Qjavax/security/auth/callback\\E"
   }, {
     "pattern":"java.base:\\Qjavax/security/auth/login\\E"
@@ -1108,8 +1090,6 @@
     "pattern":"java.base:\\Qjdk/internal/foreign\\E"
   }, {
     "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/nfkc.nrm\\E"
-  }, {
-    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/uprops.icu\\E"
   }, {
     "pattern":"java.base:\\Qjdk/internal/jimage/decompressor\\E"
   }, {
@@ -1152,8 +1132,6 @@
     "pattern":"java.base:\\Qsun/invoke/util\\E"
   }, {
     "pattern":"java.base:\\Qsun/net/ext\\E"
-  }, {
-    "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
   }, {
     "pattern":"java.base:\\Qsun/net/spi\\E"
   }, {

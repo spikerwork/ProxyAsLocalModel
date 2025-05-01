@@ -47,6 +47,7 @@ graalvmNative {
         named("main") {
             imageName.set("Proxy")
             mainClass.set("io.github.stream29.proxy.MainKt")
+            buildArgs("--enable-native-access=ALL-UNNAMED")
         }
     }
 }

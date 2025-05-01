@@ -139,48 +139,8 @@
   "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
 },
 {
-  "name":"com.aallam.openai.api.chat.TextContent",
-  "fields":[{"name":"Companion"}]
-},
-{
-  "name":"com.aallam.openai.api.chat.TextContent$Companion",
-  "methods":[{"name":"serializer","parameterTypes":[] }]
-},
-{
-  "name":"com.aallam.openai.api.exception.OpenAIError",
-  "fields":[{"name":"Companion"}]
-},
-{
-  "name":"com.aallam.openai.api.exception.OpenAIError$Companion",
-  "methods":[{"name":"serializer","parameterTypes":[] }]
-},
-{
   "name":"com.intellij.rt.execution.application.AppMainV2$Agent",
   "methods":[{"name":"premain","parameterTypes":["java.lang.String","java.lang.instrument.Instrumentation"] }]
-},
-{
-  "name":"com.sun.crypto.provider.AESCipher$General",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.ARCFOURCipher",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Poly1305",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.DESCipher",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.DESedeCipher",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.DHParameters",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.sun.crypto.provider.GaloisCounterMode$AESGCM",
@@ -188,22 +148,6 @@
 },
 {
   "name":"com.sun.crypto.provider.HmacCore$HmacSHA256",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.HmacCore$HmacSHA384",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.TlsKeyMaterialGenerator",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.TlsMasterSecretGenerator",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.TlsPrfGenerator$V12",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -254,6 +198,22 @@
 {
   "name":"com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.ChatCompletionRequest",
+  "fields":[{"name":"Companion"}]
+},
+{
+  "name":"io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.ChatCompletionRequest$Companion",
+  "methods":[{"name":"serializer","parameterTypes":[] }]
+},
+{
+  "name":"io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.TextContent",
+  "fields":[{"name":"Companion"}]
+},
+{
+  "name":"io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.TextContent$Companion",
+  "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {
   "name":"io.github.stream29.proxy.server.LChatCompletionRequest",
@@ -312,22 +272,11 @@
   "name":"io.ktor.client.engine.HttpClientEngineConfig"
 },
 {
-  "name":"io.ktor.client.plugins.DefaultRequest"
-},
-{
-  "name":"io.ktor.client.plugins.HttpRetryDelayContext"
-},
-{
-  "name":"io.ktor.client.plugins.HttpRetryModifyRequestContext"
-},
-{
-  "name":"io.ktor.client.plugins.HttpRetryShouldRetryContext"
+  "name":"io.ktor.client.engine.cio.Endpoint",
+  "fields":[{"name":"connections"}]
 },
 {
   "name":"io.ktor.client.plugins.HttpSend"
-},
-{
-  "name":"io.ktor.client.plugins.HttpTimeoutConfig"
 },
 {
   "name":"io.ktor.client.plugins.api.ClientPluginImpl"
@@ -336,37 +285,19 @@
   "name":"io.ktor.client.plugins.api.ClientPluginInstance"
 },
 {
-  "name":"io.ktor.client.plugins.auth.AtomicCounter",
-  "fields":[{"name":"atomic"}]
-},
-{
-  "name":"io.ktor.client.plugins.auth.AuthProvider"
-},
-{
-  "name":"io.ktor.client.plugins.auth.providers.AuthTokenHolder",
-  "fields":[{"name":"loadTokensDeferred"}, {"name":"refreshTokensDeferred"}]
-},
-{
-  "name":"io.ktor.client.plugins.logging.HttpClientCallLogger",
-  "fields":[{"name":"requestLogged"}, {"name":"responseLogged"}]
-},
-{
-  "name":"io.ktor.client.request.HttpRequest"
-},
-{
-  "name":"io.ktor.client.request.HttpRequestBuilder"
-},
-{
   "name":"io.ktor.client.request.ResponseAdapter"
 },
 {
-  "name":"io.ktor.client.statement.HttpResponse"
+  "name":"io.ktor.http.ContentType"
 },
 {
   "name":"io.ktor.http.HttpStatusCode"
 },
 {
   "name":"io.ktor.http.content.ChannelWriterContent"
+},
+{
+  "name":"io.ktor.http.content.TextContent"
 },
 {
   "name":"io.ktor.network.selector.InterestSuspensionsMap",
@@ -387,6 +318,9 @@
 {
   "name":"io.ktor.network.sockets.SocketBase",
   "fields":[{"name":"actualCloseFlag"}, {"name":"closeFlag"}, {"name":"readerJob"}, {"name":"writerJob"}]
+},
+{
+  "name":"io.ktor.server.application.ApplicationCall"
 },
 {
   "name":"io.ktor.server.application.PluginInstance"
@@ -494,9 +428,6 @@
 {
   "name":"java.lang.Thread",
   "fields":[{"name":"threadLocalRandomProbe"}]
-},
-{
-  "name":"java.lang.Throwable"
 },
 {
   "name":"java.lang.Void",
@@ -752,15 +683,6 @@
   "name":"kotlin.Boolean"
 },
 {
-  "name":"kotlin.Function2"
-},
-{
-  "name":"kotlin.Function3"
-},
-{
-  "name":"kotlin.Int"
-},
-{
   "name":"kotlin.Long"
 },
 {
@@ -791,10 +713,7 @@
   "name":"kotlin.collections.MutableMap"
 },
 {
-  "name":"kotlin.jvm.functions.Function2"
-},
-{
-  "name":"kotlin.jvm.functions.Function3"
+  "name":"kotlin.coroutines.jvm.internal.BaseContinuationImpl"
 },
 {
   "name":"kotlin.jvm.internal.DefaultConstructorMarker"
@@ -802,9 +721,6 @@
 {
   "name":"kotlin.reflect.jvm.internal.ReflectionFactoryImpl",
   "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"kotlin.time.Duration"
 },
 {
   "name":"kotlinx.coroutines.CancellableContinuationImpl",
@@ -871,6 +787,9 @@
   "fields":[{"name":"cleanedAndPointers$volatile"}]
 },
 {
+  "name":"kotlinx.coroutines.internal.StackTraceRecoveryKt"
+},
+{
   "name":"kotlinx.coroutines.internal.ThreadSafeHeap",
   "fields":[{"name":"_size$volatile"}]
 },
@@ -895,15 +814,11 @@
   "fields":[{"name":"_availablePermits$volatile"}, {"name":"deqIdx$volatile"}, {"name":"enqIdx$volatile"}, {"name":"head$volatile"}, {"name":"tail$volatile"}]
 },
 {
+  "name":"kotlinx.io.RefCountingCopyTracker",
+  "fields":[{"name":"copyCount"}]
+},
+{
   "name":"kotlinx.io.Source"
-},
-{
-  "name":"kotlinx.serialization.json.JsonElement",
-  "fields":[{"name":"Companion"}]
-},
-{
-  "name":"kotlinx.serialization.json.JsonElement$Companion",
-  "methods":[{"name":"serializer","parameterTypes":[] }]
 },
 {
   "name":"sun.management.ClassLoadingImpl",
@@ -961,19 +876,7 @@
   "methods":[{"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
 },
 {
-  "name":"sun.security.provider.DSA$SHA224withDSA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.provider.DSA$SHA256withDSA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.provider.SHA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.provider.SHA2$SHA224",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -985,10 +888,6 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"sun.security.provider.SHA5$SHA512",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.provider.X509Factory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -997,27 +896,11 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"sun.security.rsa.PSSParameters",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.rsa.RSAKeyFactory$Legacy",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"sun.security.rsa.RSAPSSSignature",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.rsa.RSASignature$SHA224withRSA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.rsa.RSASignature$SHA256withRSA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.ssl.SSLContextImpl$TLSContext",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
