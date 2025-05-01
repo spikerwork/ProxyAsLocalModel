@@ -1,10 +1,6 @@
 package io.github.stream29.proxy
 
-import com.charleskorn.kaml.MultiLineStringStyle
-import com.charleskorn.kaml.PolymorphismStyle
-import com.charleskorn.kaml.SingleLineStringStyle
-import com.charleskorn.kaml.Yaml
-import com.charleskorn.kaml.YamlConfiguration
+import com.charleskorn.kaml.*
 import io.github.stream29.proxy.client.listModelNames
 import io.github.stream29.proxy.server.configureLmStudioServer
 import io.github.stream29.proxy.server.configureOllamaServer
@@ -14,6 +10,9 @@ import io.github.stream29.streamlin.AutoUpdateMode
 import io.github.stream29.streamlin.AutoUpdatePropertyRoot
 import io.github.stream29.streamlin.getValue
 import io.github.stream29.streamlin.setValue
+import io.ktor.client.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -30,8 +29,7 @@ val configLogger = LoggerFactory.getLogger("Config")!!
 val modelListLogger = LoggerFactory.getLogger("Model List")!!
 val lmStudioLogger = LoggerFactory.getLogger("LM Studio Server")!!
 val ollamaLogger = LoggerFactory.getLogger("Ollama Server")!!
-val openAiLogger = LoggerFactory.getLogger("Open AI Client")!!
-val qwenLogger = LoggerFactory.getLogger("Qwen")!!
+val clientLogger = LoggerFactory.getLogger("Ktor Client")!!
 
 val globalJson = Json {
     prettyPrint = false
@@ -47,8 +45,15 @@ val globalYaml = Yaml(
         strictMode = false,
         singleLineStringStyle = SingleLineStringStyle.PlainExceptAmbiguous,
         multiLineStringStyle = MultiLineStringStyle.Literal,
+        encodeDefaults = false
     )
 )
+
+val globalClient = HttpClient(io.ktor.client.engine.cio.CIO) {
+    install(ContentNegotiation) {
+        json(globalJson)
+    }
+}
 
 val configFile: File = File("config.yml")
 

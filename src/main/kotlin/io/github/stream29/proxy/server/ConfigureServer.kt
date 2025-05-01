@@ -1,6 +1,8 @@
 package io.github.stream29.proxy.server
 
 import io.github.stream29.proxy.apiProviders
+import io.github.stream29.proxy.client.STREAM_END_TOKEN
+import io.github.stream29.proxy.client.STREAM_PREFIX
 import io.github.stream29.proxy.client.listModelNames
 import io.github.stream29.proxy.globalJson
 import io.github.stream29.proxy.lmStudioLogger
@@ -33,8 +35,8 @@ fun Application.configureLmStudioServer() {
             }
             val requestWithOriginalModelName = request.copy(model = request.model.substringAfter('/'))
             call.respondChatSSE(
-                streamPrefix = "data:",
-                streamEndToken = "data: [DONE]",
+                streamPrefix = STREAM_PREFIX,
+                streamEndToken = STREAM_END_TOKEN,
                 apiProvider.generateLStream(requestWithOriginalModelName)
             )
         }

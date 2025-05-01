@@ -1,17 +1,13 @@
 package io.github.stream29.proxy.client
 
-import com.aallam.openai.api.chat.ChatCompletionChunk
-import com.aallam.openai.api.chat.ChatCompletionRequest
-import com.aallam.openai.api.chat.ChatDelta
-import com.aallam.openai.api.chat.ChatMessage
-import com.aallam.openai.api.core.Role
-import com.aallam.openai.api.logging.Logger
-import com.aallam.openai.api.model.ModelId
-import com.aallam.openai.client.LoggingConfig
-import com.aallam.openai.client.OpenAI
-import com.aallam.openai.client.OpenAIHost
+import io.github.stream29.proxy.clientLogger
 import io.github.stream29.proxy.encodeYaml
-import io.github.stream29.proxy.openAiLogger
+import io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.ChatCompletionChunk
+import io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.ChatCompletionRequest
+import io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.ChatDelta
+import io.github.stream29.proxy.relocate.com.aallam.openai.api.chat.ChatMessage
+import io.github.stream29.proxy.relocate.com.aallam.openai.api.core.Role
+import io.github.stream29.proxy.relocate.com.aallam.openai.api.model.ModelId
 import io.github.stream29.proxy.server.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,7 +16,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Suppress("unused")
 @SerialName("OpenAi")
 @Serializable
 data class OpenAiConfig(
@@ -28,37 +23,36 @@ data class OpenAiConfig(
     val apiKey: String,
     val modelList: List<String>,
 ) : ApiProvider {
-    private val client = OpenAI(
-        token = apiKey,
-        host = OpenAIHost(baseUrl),
-        logging = LoggingConfig(logger = Logger.Empty)
-    )
-
     override suspend fun getModelNameList(): List<String> = modelList
     override suspend fun generateLStream(request: LChatCompletionRequest): Flow<LChatCompletionResponseChunk> {
-        return client.chatCompletionsRecording(request.asOpenAiRequest()).map { it.asLChatCompletionResponseChunk() }
+        return chatCompletionsRecording(request.asOpenAiRequest()).map { it.asLChatCompletionResponseChunk() }
     }
 
     override suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk> {
-        return client.chatCompletionsRecording(request.asOpenAiRequest()).map { it.asOChatResponseChunk() }
+        return chatCompletionsRecording(request.asOpenAiRequest()).map { it.asOChatResponseChunk() }
     }
 
-    override fun close() {
-        client.close()
-    }
+    override fun close() {}
 }
 
-private suspend fun OpenAI.chatCompletionsRecording(
+private suspend fun OpenAiConfig.chatCompletionsRecording(
     request: ChatCompletionRequest,
 ): Flow<ChatCompletionChunk> {
-    val recorder = GenerationRecorder(openAiLogger)
+    val recorder = GenerationRecorder(clientLogger)
     recorder.onRequest(request.encodeYaml())
-    return chatCompletions(request)
-        .onEach { recorder.onPartialOutput(it.encodeYaml()) }
-        .onCompletion {
-            if (it != null) recorder.dumpOnError(it)
-            else recorder.dump()
+    return createStreamingChatCompletion(
+        baseUrl = baseUrl,
+        apiKey = apiKey,
+        request = request
+    ).onEach { chunk ->
+        chunk.choices.firstOrNull()?.delta?.run {
+            content?.let { recorder.onPartialOutput(it) }
+            reasoningContent?.let { recorder.onPartialReasoning(it) }
         }
+    }.onCompletion {
+        if (it != null) recorder.dumpOnError(it)
+        else recorder.dump()
+    }
 }
 
 private fun OChatRequest.asOpenAiRequest() =
@@ -108,7 +102,7 @@ private fun LChatMessage.asOpenAiMessage() =
 
 private fun ChatCompletionChunk.asLChatCompletionResponseChunk() =
     LChatCompletionResponseChunk(
-        id = id,
+        id = id ?: "null",
         model = model.id,
         choices = choices.map {
             LChatCompletionChoice(
