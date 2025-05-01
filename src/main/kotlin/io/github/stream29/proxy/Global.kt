@@ -1,7 +1,6 @@
 package io.github.stream29.proxy
 
 import com.charleskorn.kaml.*
-import io.github.stream29.jsonschemagenerator.SchemaGenerator
 import io.github.stream29.proxy.client.listModelNames
 import io.github.stream29.proxy.server.configureLmStudioServer
 import io.github.stream29.proxy.server.configureOllamaServer
@@ -12,6 +11,7 @@ import io.github.stream29.streamlin.AutoUpdatePropertyRoot
 import io.github.stream29.streamlin.getValue
 import io.github.stream29.streamlin.setValue
 import io.ktor.client.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.cio.*
@@ -54,6 +54,11 @@ val globalYaml = Yaml(
 val globalClient = HttpClient(io.ktor.client.engine.cio.CIO) {
     install(ContentNegotiation) {
         json(globalJson)
+    }
+    install(HttpTimeout) {
+        socketTimeoutMillis = 10000
+        connectTimeoutMillis = 10000
+        requestTimeoutMillis = Long.MAX_VALUE
     }
     expectSuccess = true
 }
