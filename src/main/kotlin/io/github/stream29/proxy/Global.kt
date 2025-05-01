@@ -107,6 +107,7 @@ apiProviders: {}
             configLogger.error("${e.message}")
         }
     }
+    configLogger.info("Config file watcher started at ${configFile.absolutePath}")
 }()
 
 private val configProperty = AutoUpdatePropertyRoot(
