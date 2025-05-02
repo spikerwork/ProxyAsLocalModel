@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.graalvm.buildtools)
     alias(libs.plugins.gradleup.shadow)
     alias(libs.plugins.kotlin.serialization)
+    application
 }
 
 group = "io.github.stream29"
@@ -40,6 +41,10 @@ dependencies {
 
 kotlin {
     jvmToolchain(21)
+}
+
+application {
+    mainClass.set("io.github.stream29.proxy.MainKt")
 }
 
 graalvmNative {
