@@ -4,6 +4,18 @@ Proxy remote LLM API as Local model. Especially works for using custom LLM in Je
 
 Powered by Ktor and kotlinx.serialization. Thanks to their no-reflex features.
 
+## Story of this project
+
+Currently, JetBrains AI Assistant provides a free plan with very limited quotes. I tried out and my quote ran out quickly.
+
+I already bought other LLM API tokens, such like Gemini and Qwen. So I started to think of using them in AI Assistant. Unfortunately, only local models from LM Studio and Ollama are supported. So I started to work on this proxy application that proxy third party LLM API as LM Studio and Ollama API so that I can use them in my JetBrains IDEs.
+
+This is Just a simple task, so I started to use the official SDKs as clients and write a simple Ktor server that provides endpoints as LM Studio and Ollama. The problem appears when I try to distribute it as a GraalVM native image. The official Java SDKS uses too many dynamic features, making it hard to compile into a native image, even with a tracing agent. So I decided to implement a simple client of streaming chat completion API by myself with Ktor and kotlinx.serialization which are both no-reflex, functional and DSL styled.
+
+As you can see, this application is distributed as a fat runnable jar and a GraalVM native image, which makes it cross-platform and fast to start.
+
+The development of this application gives me confidence in Kotlin/Ktor/kotlinx.serialization. The Kotlin world uses more functional programming and less reflexion, which makes it more suitable for GraalVM native image, with faster startup and less memory usage.
+
 ## Currently supported
 
 Proxy from: OpenAI, Claude, DashScope(Alibaba Qwen), Gemini, Deepseek, Mistral, SiliconFlow.
