@@ -15,6 +15,7 @@ data class Config(
 data class LmStudioConfig(
     val port: Int = 1235,
     val host: String = "0.0.0.0",
+    val path: String = "/",
     val enabled: Boolean = true,
 )
 
@@ -22,6 +23,7 @@ data class LmStudioConfig(
 data class OllamaConfig(
     val port: Int = 11435,
     val host: String = "0.0.0.0",
+    val path: String = "/",
     val enabled: Boolean = true,
 )
 

@@ -28,62 +28,66 @@ fun createLmStudioServer(config: LmStudioConfig): EmbeddedServer<CIOApplicationE
     {
         configureServerCommon(lmStudioLogger)
         routing {
-            get("/api/v0/models") {
-                call.respond<LModelResponse>(LModelResponse(apiProviders.listModelNames().map { LModel(it) }))
+            route(config.path) {
+                get("/api/v0/models") {
+                    call.respond<LModelResponse>(LModelResponse(apiProviders.listModelNames().map { LModel(it) }))
+                }
+                post("/api/v0/chat/completions") {
+                    val request = call.receive<LChatCompletionRequest>()
+                    val apiProvider = apiProviders[request.model.substringBefore('/')]
+                    if (apiProvider == null) {
+                        call.respond<HttpStatusCode>(HttpStatusCode.NotFound)
+                        return@post
+                    }
+                    val requestWithOriginalModelName = request.copy(model = request.model.substringAfter('/'))
+                    call.respondChatSSE<LChatCompletionResponseChunk>(
+                        streamPrefix = STREAM_PREFIX,
+                        streamEndToken = STREAM_END_TOKEN,
+                        apiProvider.generateLStream(requestWithOriginalModelName)
+                    )
+                }
             }
 
-            this.post("/api/v0/chat/completions") {
-                val request = call.receive<LChatCompletionRequest>()
-                val apiProvider = apiProviders[request.model.substringBefore('/')]
-                if (apiProvider == null) {
-                    call.respond<HttpStatusCode>(HttpStatusCode.NotFound)
-                    return@post
-                }
-                val requestWithOriginalModelName = request.copy(model = request.model.substringAfter('/'))
-                call.respondChatSSE<LChatCompletionResponseChunk>(
-                    streamPrefix = STREAM_PREFIX,
-                    streamEndToken = STREAM_END_TOKEN,
-                    apiProvider.generateLStream(requestWithOriginalModelName)
-                )
-            }
         }
     }
 
-fun createOllamaServer(config1: OllamaConfig): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> =
+fun createOllamaServer(config: OllamaConfig): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> =
     embeddedServer(
         factory = CIO,
         environment = applicationEnvironment { log = ollamaLogger.filterKtorLogging() },
-        port = config1.port,
-        host = config1.host
+        port = config.port,
+        host = config.host
     ) {
         configureServerCommon(ollamaLogger)
         routing {
-            get("/") {
-                call.respond<String>("Ollama is running")
-            }
-            get("/api/tags") {
-                call.respond<OModelResponse>(
-                    apiProviders
-                        .listModelNames()
-                        .map { OModel(it) }
-                        .let { OModelResponse(it) }
-                )
+            route(config.path) {
+                get("/") {
+                    call.respond<String>("Ollama is running")
+                }
+                get("/api/tags") {
+                    call.respond<OModelResponse>(
+                        apiProviders
+                            .listModelNames()
+                            .map { OModel(it) }
+                            .let { OModelResponse(it) }
+                    )
+                }
+                post("/api/chat") {
+                    val request = call.receive<OChatRequest>()
+                    val apiProvider = apiProviders[request.model.substringBefore('/')]
+                    if (apiProvider == null) {
+                        call.respond<HttpStatusCode>(HttpStatusCode.NotFound)
+                        return@post
+                    }
+                    val requestWithOriginalModelName = request.copy(model = request.model.substringAfter('/'))
+                    call.respondChatSSE<OChatResponseChunk>(
+                        streamPrefix = "",
+                        streamEndToken = "",
+                        apiProvider.generateOStream(requestWithOriginalModelName),
+                    )
+                }
             }
 
-            this.post("/api/chat") {
-                val request = call.receive<OChatRequest>()
-                val apiProvider = apiProviders[request.model.substringBefore('/')]
-                if (apiProvider == null) {
-                    call.respond<HttpStatusCode>(HttpStatusCode.NotFound)
-                    return@post
-                }
-                val requestWithOriginalModelName = request.copy(model = request.model.substringAfter('/'))
-                call.respondChatSSE<OChatResponseChunk>(
-                    streamPrefix = "",
-                    streamEndToken = "",
-                    apiProvider.generateOStream(requestWithOriginalModelName),
-                )
-            }
         }
     }
 
