@@ -6,7 +6,7 @@ Powered by Ktor and kotlinx.serialization. Thanks to their no-reflex features.
 
 ## Currently supported
 
-Proxy from: OpenAI, DashScope(Alibaba Qwen), Gemini, Deepseek, Mistral, SiliconFlow.
+Proxy from: OpenAI, Claude, DashScope(Alibaba Qwen), Gemini, Deepseek, Mistral, SiliconFlow.
 
 Proxy as: LM Studio, Ollama.
 
@@ -20,8 +20,8 @@ Run the application, and you will see a help message:
 
 ```
 2025-05-02 10:43:53 INFO  Help - It looks that you are starting the program for the first time here.
-2025-05-02 10:43:53 INFO  Help - A default config file is created at E:\ACodeSpace\local\OpenAI2LmStudioProxy\OpenAI2LmStudioProxy\build\native\nativeCompile\config.yml with schema annotation.
-2025-05-02 10:43:53 INFO  Config - Config file watcher started at E:\ACodeSpace\local\OpenAI2LmStudioProxy\OpenAI2LmStudioProxy\build\native\nativeCompile\config.yml
+2025-05-02 10:43:53 INFO  Help - A default config file is created at your_path\config.yml with schema annotation.
+2025-05-02 10:43:53 INFO  Config - Config file watcher started at your_path\config.yml
 2025-05-02 10:43:53 INFO  LM Studio Server - LM Studio Server started at 1234
 2025-05-02 10:43:53 INFO  Ollama Server - Ollama Server started at 11434
 2025-05-02 10:43:53 INFO  Model List - Model list loaded with: []
@@ -38,7 +38,7 @@ When first generating the config file, it will be created with schema annotation
 ## Example config file
 
 ```yaml
-# $schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v1.schema.json
+# $schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v2.schema.json
 lmStudio:
   port: 1234 # This is default value
   enabled: true # This is default value
@@ -59,6 +59,11 @@ apiProviders:
     apiKey: <your_api_key>
     modelList:
       - gpt-4o
+  Claude:
+    type: Claude
+    apiKey: <your_api_key>
+    modelList:
+      - claude-3-7-sonnet
   Qwen:
     type: DashScope
     apiKey: <your_api_key>
