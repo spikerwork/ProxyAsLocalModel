@@ -22,14 +22,15 @@ data class OpenAiConfig(
     val baseUrl: String,
     val apiKey: String,
     val modelList: List<String>,
+    val extraRequest: (ChatCompletionRequest) -> ChatCompletionRequest = { it },
 ) : ApiProvider {
     override suspend fun getModelNameList(): List<String> = modelList
     override suspend fun generateLStream(request: LChatCompletionRequest): Flow<LChatCompletionResponseChunk> {
-        return chatCompletionsRecording(request.asOpenAiRequest()).map { it.asLChatCompletionResponseChunk() }
+        return chatCompletionsRecording(extraRequest(request.asOpenAiRequest())).map { it.asLChatCompletionResponseChunk() }
     }
 
     override suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk> {
-        return chatCompletionsRecording(request.asOpenAiRequest()).map { it.asOChatResponseChunk() }
+        return chatCompletionsRecording(extraRequest(request.asOpenAiRequest())).map { it.asOChatResponseChunk() }
     }
 
     override fun close() {}

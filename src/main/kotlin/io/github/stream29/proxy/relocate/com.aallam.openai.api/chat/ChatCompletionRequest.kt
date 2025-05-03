@@ -6,6 +6,7 @@ import io.github.stream29.proxy.relocate.com.aallam.openai.api.BetaOpenAI
 import io.github.stream29.proxy.relocate.com.aallam.openai.api.model.ModelId
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 
 /**
  * Creates a completion for the chat message.
@@ -183,6 +184,9 @@ data class ChatCompletionRequest(
      * Options for streaming response. Only used when in streaming mode.
      */
     @SerialName("stream_options") val streamOptions: StreamOptions? = null,
-    val stream: Boolean = true
+    val stream: Boolean = true,
+
+    @SerialName("extra_body")
+    val extraBody: JsonElement? = null,
 )
 
