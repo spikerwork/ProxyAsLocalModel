@@ -62,3 +62,15 @@ data class GeminiConfig(
     apiKey = apiKey,
     modelList = modelList
 )
+
+@Suppress("unused")
+@Serializable
+@SerialName("Claude")
+data class ClaudeConfig(
+    val apiKey: String,
+    val modelList: List<String>,
+): ApiProvider by OpenAiConfig(
+    baseUrl = "https://api.anthropic.com/v1/",
+    apiKey = apiKey,
+    modelList = modelList
+)
