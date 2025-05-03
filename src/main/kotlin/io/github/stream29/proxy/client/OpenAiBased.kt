@@ -22,7 +22,7 @@ data class DeepSeekConfig(
     val apiKey: String,
     val modelList: List<String> = listOf("deepseek-chat", "deepseek-reasoner"),
 ): ApiProvider by OpenAiConfig(
-    baseUrl = "https://api.deepseek.ai/v1/",
+    baseUrl = "https://api.deepseek.com/",
     apiKey = apiKey,
     modelList = modelList
 )
