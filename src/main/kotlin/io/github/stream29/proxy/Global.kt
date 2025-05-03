@@ -2,10 +2,8 @@ package io.github.stream29.proxy
 
 import com.charleskorn.kaml.*
 import io.github.stream29.proxy.client.listModelNames
-import io.github.stream29.proxy.server.configureLmStudioServer
-import io.github.stream29.proxy.server.configureOllamaServer
-import io.github.stream29.proxy.server.embeddedServer
-import io.github.stream29.proxy.server.filterKtorLogging
+import io.github.stream29.proxy.server.createLmStudioServer
+import io.github.stream29.proxy.server.createOllamaServer
 import io.github.stream29.streamlin.AutoUpdateMode
 import io.github.stream29.streamlin.AutoUpdatePropertyRoot
 import io.github.stream29.streamlin.getValue
@@ -14,8 +12,6 @@ import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.cio.*
-import io.ktor.server.engine.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -160,13 +156,7 @@ private val lmStudioConfigProperty = AutoUpdatePropertyRoot(
 val lmStudioServer by lmStudioConfigProperty.subproperty { config ->
     if (config.enabled) {
         lmStudioLogger.info("LM Studio Server started at ${config.port}")
-        embeddedServer(
-            factory = CIO,
-            environment = applicationEnvironment { log = lmStudioLogger.filterKtorLogging() },
-            port = config.port,
-            host = config.host,
-            module = { configureLmStudioServer() }
-        ).apply { start(wait = false) }
+        createLmStudioServer(config).apply { start(wait = false) }
     } else null
 }
 
@@ -179,13 +169,7 @@ private val ollamaConfigProperty = AutoUpdatePropertyRoot(
 val ollamaServer by ollamaConfigProperty.subproperty {
     if (it.enabled) {
         ollamaLogger.info("Ollama Server started at ${it.port}")
-        embeddedServer(
-            factory = CIO,
-            environment = applicationEnvironment { log = ollamaLogger.filterKtorLogging() },
-            port = it.port,
-            host = it.host,
-            module = { configureOllamaServer() }
-        ).apply { start(wait = false) }
+        createOllamaServer(it).apply { start(wait = false) }
     } else null
 }
 
