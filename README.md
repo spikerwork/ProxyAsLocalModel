@@ -38,13 +38,19 @@ When first generating the config file, it will be created with schema annotation
 ## Example config file
 
 ```yaml
-# $schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v0.schema.json
+# $schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v1.schema.json
 lmStudio:
   port: 1234 # This is default value
   enabled: true # This is default value
 ollama:
   port: 11434 # This is default value
   enabled: true # This is default value
+client:
+  socketTimeout: 1919810 # Long.MAX_VALUE is default value, in milliseconds
+  connectionTimeout: 1919810 # Long.MAX_VALUE is default value, in milliseconds
+  requestTimeout: 1919810 # Long.MAX_VALUE is default value, in milliseconds
+  retry: 3 # This is default value
+  delayBeforeRetry: 1000 # This is default value, in milliseconds
 
 apiProviders:
   OpenAI:

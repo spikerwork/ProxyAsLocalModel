@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class Config(
     val lmStudio: LmStudioConfig = LmStudioConfig(),
     val ollama: OllamaConfig = OllamaConfig(),
+    val client: KtorClientConfig = KtorClientConfig(),
     val apiProviders: Map<String, ApiProvider> = emptyMap(),
 )
 
@@ -22,4 +23,13 @@ data class OllamaConfig(
     val port: Int = 11435,
     val host: String = "0.0.0.0",
     val enabled: Boolean = true,
+)
+
+@Serializable
+data class KtorClientConfig(
+    val socketTimeout: Long = Long.MAX_VALUE,
+    val connectTimeout: Long = Long.MAX_VALUE,
+    val requestTimeout: Long = Long.MAX_VALUE,
+    val retry: Int = 3,
+    val delayBeforeRetry: Long = 1000,
 )

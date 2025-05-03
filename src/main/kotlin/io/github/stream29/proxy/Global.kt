@@ -51,18 +51,6 @@ val globalYaml = Yaml(
     )
 )
 
-val globalClient = HttpClient(io.ktor.client.engine.cio.CIO) {
-    install(ContentNegotiation) {
-        json(globalJson)
-    }
-    install(HttpTimeout) {
-        socketTimeoutMillis = 10000
-        connectTimeoutMillis = 10000
-        requestTimeoutMillis = Long.MAX_VALUE
-    }
-    expectSuccess = true
-}
-
 val configFile = File("config.yml")
 
 @Suppress("unused")
@@ -72,7 +60,7 @@ val unused = {
         helpLogger.info("A default config file is created at ${configFile.absolutePath} with schema annotation.")
         configFile.writeText(
             """
-# ${'$'}schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v0.schema.json
+# ${'$'}schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v1.schema.json
 lmStudio:
   port: 1234
 ollama:
@@ -95,6 +83,11 @@ apiProviders: {}
                 val previousApiProviders = apiProviders
                 previousApiProviders.values.forEach { it.close() }
                 apiProviderProperty.set(newConfig.apiProviders)
+            }
+            if (previousConfig.client != newConfig.client) {
+                val previousClient = globalClient
+                previousClient.close()
+                clientConfigProperty.set(newConfig.client)
             }
             if (previousConfig.lmStudio != newConfig.lmStudio) {
                 val previousServer = lmStudioServer
@@ -120,6 +113,31 @@ private val configProperty = AutoUpdatePropertyRoot(
 )
 
 var config by configProperty
+
+val clientConfigProperty = AutoUpdatePropertyRoot(
+    sync = true,
+    mode = AutoUpdateMode.PROPAGATE,
+    initValue = config.client
+)
+
+val globalClient by clientConfigProperty.subproperty {
+    configLogger.info("Ktor Client created with: $it")
+    HttpClient(io.ktor.client.engine.cio.CIO) {
+        install(ContentNegotiation) {
+            json(globalJson)
+        }
+        install(HttpTimeout) {
+            socketTimeoutMillis = it.socketTimeout
+            connectTimeoutMillis = it.connectTimeout
+            requestTimeoutMillis = it.requestTimeout
+        }
+        install(HttpRequestRetry) {
+            retryOnException(maxRetries = it.retry)
+            constantDelay(it.delayBeforeRetry)
+        }
+        expectSuccess = true
+    }
+}
 
 private val apiProviderProperty = AutoUpdatePropertyRoot(
     sync = true,
