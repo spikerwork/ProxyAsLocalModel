@@ -74,3 +74,15 @@ data class ClaudeConfig(
     apiKey = apiKey,
     modelList = modelList
 )
+
+@Suppress("unused")
+@Serializable
+@SerialName("OpenRouter")
+data class OpenRouterConfig(
+    val apiKey: String,
+    val modelList: List<String>,
+): ApiProvider by OpenAiConfig(
+    baseUrl = "https://openrouter.ai/api/v1",
+    apiKey = apiKey,
+    modelList = modelList
+)

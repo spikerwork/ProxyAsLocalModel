@@ -107,6 +107,11 @@ apiProviders:
       - Qwen/Qwen3-235B-A22B
       - Pro/deepseek-ai/DeepSeek-V3
       - THUDM/GLM-4-32B-0414
+  OpenRouter:
+    type: OpenRouter
+    apiKey: <your_api_key>
+    modelList:
+      - openai/gpt-4o
   Gemini:
     type: Gemini
     apiKey: <your_api_key>
