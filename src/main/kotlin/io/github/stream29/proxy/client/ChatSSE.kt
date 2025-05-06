@@ -29,7 +29,8 @@ suspend fun createStreamingChatCompletion(
             append(HttpHeaders.Authorization, "Bearer $apiKey")
         }
     }
-    val channel: ByteReadChannel = statement.body()
+    val channel = runCatching { statement.body<ByteReadChannel>() }
+        .getOrElse { return flow { throw it } }
     return flow {
         while (currentCoroutineContext().isActive && !channel.isClosedForRead) {
             val line = channel.readUTF8Line()
