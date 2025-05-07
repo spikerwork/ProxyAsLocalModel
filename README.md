@@ -1,8 +1,10 @@
 # ProxyAsLocalModel
 
+### Important! Forked from original repo just to add socks proxy support
+
 Proxy remote LLM API as Local model. Especially works for using custom LLM in JetBrains AI Assistant.
 
-Powered by Ktor and kotlinx.serialization. Thanks to their no-reflex features.
+Powered by Ktor and kotlinx.serialization. Thanks to their no-reflex features. 
 
 ## Story of this project
 
