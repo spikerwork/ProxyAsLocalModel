@@ -23,42 +23,11 @@ data class DashScopeConfig(
 data class DeepSeekConfig(
     val apiKey: String,
     val modelList: List<String> = listOf("deepseek-chat", "deepseek-reasoner"),
-) : ApiProvider {
-    val delegate = OpenAiConfig(
-        baseUrl = "https://api.deepseek.com/",
-        apiKey = apiKey,
-        modelList = modelList
-    )
-
-    override suspend fun getModelNameList(): List<String> = modelList
-
-    override suspend fun generateLStream(request: LChatCompletionRequest): Flow<LChatCompletionResponseChunk> {
-        return delegate.generateLStream(
-            request.copy(
-                messages = request.messages.mergeBy(
-                    selector = { it.role },
-                    merger = { a, b -> a.copy(content = a.content + b.content) }
-                )
-            )
-        )
-    }
-
-    override suspend fun generateOStream(request: OChatRequest): Flow<OChatResponseChunk> {
-        return delegate.generateOStream(
-            request.copy(
-                messages = request.messages.mergeBy(
-                    selector = { it.role },
-                    merger = { a, b -> a.copy(content = a.content + b.content) }
-                )
-            )
-        )
-    }
-
-    override fun close() {
-        delegate.close()
-    }
-
-}
+) : ApiProvider by OpenAiConfig(
+    baseUrl = "https://api.deepseek.com/",
+    apiKey = apiKey,
+    modelList = modelList
+).messageMergedByRole()
 
 @Suppress("unused")
 @Serializable
