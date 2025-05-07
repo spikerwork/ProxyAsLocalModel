@@ -18,7 +18,7 @@ The development of this application gives me confidence in Kotlin/Ktor/kotlinx.s
 
 ## Currently supported
 
-Proxy from: OpenAI, Claude, DashScope(Alibaba Qwen), Gemini, Deepseek, Mistral, SiliconFlow.
+Proxy from: OpenAI, Claude, DashScope(Alibaba Qwen), Gemini, Deepseek, Mistral, SiliconFlow, OpenRouter.
 
 Proxy as: LM Studio, Ollama.
 
@@ -67,6 +67,11 @@ client:
   requestTimeout: 1919810 # Long.MAX_VALUE is default value, in milliseconds
   retry: 3 # This is default value
   delayBeforeRetry: 1000 # This is default value, in milliseconds
+  # Socks5 proxy settings
+  proxyHost: 127.0.0.1 # Default proxy IP
+  proxyPort: 8180 # Default port
+  proxyEnabled: false # Disabled by default
+
 
 apiProviders:
   OpenAI:

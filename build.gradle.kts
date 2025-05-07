@@ -1,13 +1,21 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+
 plugins {
+    // Kotlin & Java
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.graalvm.buildtools)
+    java
+
+    // Shadow (fat-jar) + GraalVM + Serialization
     alias(libs.plugins.gradleup.shadow)
+    alias(libs.plugins.graalvm.buildtools)
     alias(libs.plugins.kotlin.serialization)
+
     application
 }
 
 group = "io.github.stream29"
-version = "0.0.7"
+version = "0.0.8"
 
 repositories {
     mavenCentral()
@@ -22,16 +30,17 @@ dependencies {
     implementation(libs.ktor.server.host.common)
     implementation(libs.ktor.server.status.pages)
 
+    // Ktor client
     implementation(libs.ktor.client.core)
+    implementation("io.ktor:ktor-client-okhttp:${libs.versions.ktor.get()}")
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.content.negotiation)
 
+    // Serialization, logging, etc.
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
-    
-    implementation(libs.logback.classic)
-    
+//    implementation(libs.logback.classic)
     implementation(libs.streamlin)
     implementation(libs.json.schema.generator)
     implementation(libs.kaml)
@@ -54,6 +63,16 @@ graalvmNative {
             mainClass.set("io.github.stream29.proxy.MainKt")
             buildArgs("--enable-native-access=ALL-UNNAMED")
         }
+    }
+}
+
+tasks.withType<ShadowJar> {
+    archiveBaseName.set("ProxyAsLocalModel")
+    archiveVersion.set(project.version.toString())
+    archiveClassifier.set("")      // drop the "-all" suffix
+    mergeServiceFiles()
+    manifest {
+        attributes["Main-Class"] = application.mainClass.get()
     }
 }
 

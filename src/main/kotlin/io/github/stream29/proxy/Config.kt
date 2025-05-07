@@ -34,4 +34,7 @@ data class KtorClientConfig(
     val requestTimeout: Long = Long.MAX_VALUE,
     val retry: Int = 3,
     val delayBeforeRetry: Long = 1000,
-)
+    val proxyHost: String = "127.0.0.1",
+    val proxyPort: Int = 8180,
+    val proxyEnabled: Boolean = false,
+    )

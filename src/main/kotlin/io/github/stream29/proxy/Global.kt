@@ -12,6 +12,10 @@ import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.ProxyBuilder
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -116,9 +120,16 @@ val clientConfigProperty = AutoUpdatePropertyRoot(
     initValue = config.client
 )
 
+@OptIn(DelicateCoroutinesApi::class)
 val globalClient by clientConfigProperty.subproperty {
     configLogger.info("Ktor Client created with: $it")
-    HttpClient(io.ktor.client.engine.cio.CIO) {
+    val client = HttpClient(OkHttp) {
+        engine {
+            if (it.proxyEnabled) {
+                configLogger.info("Ktor Client using socks proxy ${it.proxyHost}:${it.proxyPort}")
+                proxy = ProxyBuilder.socks(it.proxyHost, it.proxyPort)
+            }
+        }
         install(ContentNegotiation) {
             json(globalJson)
         }
@@ -133,6 +144,21 @@ val globalClient by clientConfigProperty.subproperty {
         }
         expectSuccess = true
     }
+
+    if (it.proxyEnabled) {
+        GlobalScope.launch {
+            try {
+                // Checking external IP
+                val body: String = client.get("https://api.ipify.org/?format=json").bodyAsText()
+                configLogger.info("Public IP via proxy: $body")
+            } catch (e: Exception) {
+                configLogger.error("Failed to fetch public IP via proxy", e)
+            }
+        }
+    }
+
+    client
+
 }
 
 private val apiProviderProperty = AutoUpdatePropertyRoot(
