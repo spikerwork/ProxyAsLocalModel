@@ -1,5 +1,7 @@
 package io.github.stream29.proxy
 
+import java.io.File
+import ch.qos.logback.classic.LoggerContext
 import com.charleskorn.kaml.*
 import io.github.stream29.proxy.client.listModelNames
 import io.github.stream29.proxy.server.createLmStudioServer
@@ -9,13 +11,13 @@ import io.github.stream29.streamlin.AutoUpdatePropertyRoot
 import io.github.stream29.streamlin.getValue
 import io.github.stream29.streamlin.setValue
 import io.ktor.client.*
+import io.ktor.client.engine.*
+import io.ktor.client.engine.okhttp.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.engine.ProxyBuilder
-import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,8 +25,11 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.File
+import ch.qos.logback.classic.Level as LogbackLevel
+
+
 
 val helpLogger = LoggerFactory.getLogger("Help")!!
 val configLogger = LoggerFactory.getLogger("Config")!!
@@ -53,6 +58,46 @@ val globalYaml = Yaml(
 
 val configFile = File("config.yml")
 
+private fun setActualLogbackLevel(levelToSet: String, origin: String) {
+    try {
+        val loggerContext = LoggerFactory.getILoggerFactory() as? LoggerContext
+        if (loggerContext != null) {
+            val rootLogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME)
+            val logbackLevel = LogbackLevel.valueOf(levelToSet.uppercase())
+            rootLogger.level = logbackLevel
+            configLogger.info("Logging level set to $levelToSet (from $origin).")
+        } else {
+            configLogger.warn("Could not get Logback LoggerContext to set logging level to $levelToSet (from $origin).")
+        }
+    } catch (e: IllegalArgumentException) {
+        configLogger.error("Invalid logging level string '$levelToSet' (from $origin).", e)
+    } catch (e: Exception) {
+        configLogger.error("Error setting Logback level to $levelToSet (from $origin): ${e.message}", e)
+    }
+}
+
+fun applyLogLevelFromConfiguration() {
+    val configuredLevel: String
+    try {
+        // Attempt to read the logging level from the initialized config
+        configuredLevel = config.logging.level
+        configLogger.debug("Read logging level '$configuredLevel' from config. Attempting to apply it.")
+    } catch (e: Exception) {
+        // This will catch the streamlin error if it still occurs during config.logging.level access,
+        // or any other error if Config/LoggingConfig defaults are missing and YAML section is absent.
+        configLogger.error(
+            "Failed to read logging level from configuration: ${e.message}. Falling back to INFO.", e
+        )
+        // Fallback to a default level if config access fails
+        setActualLogbackLevel("INFO", "fallback-due-to-config-error")
+        return
+    }
+
+    // If we successfully read from config, use that.
+    setActualLogbackLevel(configuredLevel, "configuration")
+}
+
+
 @Suppress("unused")
 val unused = {
     if (!configFile.exists()) {
@@ -66,9 +111,13 @@ lmStudio:
 ollama:
   port: 11434
 apiProviders: {}
+logging: # Added default logging config
+  level: INFO
 """
         )
     }
+
+    // Keep the file watcher logic
     watch(configFile) { file ->
         if (!file.exists())
             return@watch
@@ -113,6 +162,7 @@ private val configProperty = AutoUpdatePropertyRoot(
 )
 
 var config by configProperty
+
 
 val clientConfigProperty = AutoUpdatePropertyRoot(
     sync = true,

@@ -4,7 +4,7 @@ graalvm-buildtools = "0.10.6"
 gradleup-shadow = "8.3.5"
 ktor = "3.1.2"
 kotlinx-serialization = "1.6.2"
-logback = "1.4.11"
+logback = "1.5.13"
 streamlin = "3.1.0"
 json-schema-generator = "1.0.5"
 kaml = "0.77.1"
@@ -19,6 +19,7 @@ ktor-server-host-common = { module = "io.ktor:ktor-server-host-common", version.
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
+ktor-client = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }

@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "io.github.stream29"
-version = "0.0.8"
+version = "0.0.9"
 
 repositories {
     mavenCentral()
@@ -31,8 +31,8 @@ dependencies {
     implementation(libs.ktor.server.status.pages)
 
     // Ktor client
+    implementation(libs.ktor.client)
     implementation(libs.ktor.client.core)
-    implementation("io.ktor:ktor-client-okhttp:${libs.versions.ktor.get()}")
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.content.negotiation)
@@ -40,7 +40,7 @@ dependencies {
     // Serialization, logging, etc.
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
-//    implementation(libs.logback.classic)
+    implementation(libs.logback.classic)
     implementation(libs.streamlin)
     implementation(libs.json.schema.generator)
     implementation(libs.kaml)

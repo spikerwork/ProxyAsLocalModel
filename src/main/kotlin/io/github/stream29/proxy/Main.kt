@@ -6,6 +6,8 @@ suspend fun main() {
     try {
         // Just to initialize Global.kt
         config
+        applyLogLevelFromConfiguration()
+
     } catch (t: Throwable) {
         t.printStackTrace()
         println("Failed to init proxy: ${t.message}")

@@ -9,6 +9,8 @@ data class Config(
     val ollama: OllamaConfig = OllamaConfig(),
     val client: KtorClientConfig = KtorClientConfig(),
     val apiProviders: Map<String, ApiProvider> = emptyMap(),
+    val logging: LoggingConfig = LoggingConfig()
+
 )
 
 @Serializable
@@ -38,3 +40,8 @@ data class KtorClientConfig(
     val proxyPort: Int = 8180,
     val proxyEnabled: Boolean = false,
     )
+
+@Serializable
+data class LoggingConfig(
+    val level: String = "OFF" // Set to OFF, ERROR, WARN, INFO, DEBUG, or TRACE
+)
