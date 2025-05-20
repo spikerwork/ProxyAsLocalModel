@@ -1,0 +1,16 @@
+services:
+  proxy-local-model:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: proxy-local-model:latest
+    container_name: proxy-local-model
+    ports:
+      - "1234:1234"
+      - "11434:11434"
+
+    volumes:
+      - ./config:/app
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx1g
+    command: ["sh","-c","java $JAVA_OPTS -jar ProxyAsLocalModel-0.0.9.jar"]

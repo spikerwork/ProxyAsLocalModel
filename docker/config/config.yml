@@ -1,0 +1,19 @@
+# $schema: https://github.com/Stream29/ProxyAsLocalModel/raw/master/config_v5.schema.json
+lmStudio:
+  port: 1234
+ollama:
+  port: 11434
+client:
+  socketTimeout: 1919810
+  connectionTimeout: 1919810
+  requestTimeout: 1919810
+  retry: 3
+  delayBeforeRetry: 1000
+  proxyHost: 127.0.0.1
+  proxyPort: 8180
+  proxyEnabled: true
+logging: 
+  level: DEBUG
+apiProviders: {}
+
+
